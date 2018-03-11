@@ -1,10 +1,10 @@
 ---
-title: "Joining dataframes using dplyr"
-author: "Erika Braithwaite  \newline"
+title: "Joining dataframes in R using dplyr"
+author: "Erika Braithwaite, PhD"
 date: "March 15, 2018"
 output:
-  slidy_presentation: default
   beamer_presentation: default
+  slidy_presentation: default
   ioslides_presentation: default
 incremental: yes
 subtitle: RLadies Montreal
@@ -21,18 +21,17 @@ header-includes:
 ---
 
 
-## 0. What is joining?
+# What is joining?
 
 We often run into scenarios where we need to join two dataframes together. Let's say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.
-
 
 Set up
 ```{r}
 #install.packages('pacman')
-pacman::p_load(knitr, data.table, dplyr)
+pacman::p_load(knitr, kableExtra, formattable, data.table, dplyr,  rmarkdown)
 ```
 
-## 1. What is joining?   
+Make some data 
 
 ```{r, echo = T}
 day1 =  data.table(ID=LETTERS[1:12],
@@ -41,78 +40,93 @@ day1 =  data.table(ID=LETTERS[1:12],
 day2 =  data.table(ID=LETTERS[6:17],
                  IQ=round(rnorm(12, 100, 20),2))
 ```
-```{r, echo = T}
-kable(list(day1, day2))
+
+# Our data   
+
+```{r, echo = T, results = 'asis'}
+kable(list(day1, day2), 'html') %>% 
+        kable_styling(full_width = F, font_size = 14)
 ```
 
-## 2. Three types of joins in dplyr 
+# Three(ish) types of joins in dplyr 
 
 If we wanted to merge the two dataframes together, we can use dplyr's joining functions:
 
 1. Mutating join: add a new variables to one table from matching rows in another
-        i. left_join
-        ii. right_join
-        iii. inner_join
-        iv. outer_join
+
+        left_join
+        right_join
+        inner_join
 
 2. Filtering join: filter observations from one tables based on whether they match 
-        i. semi_join
-        ii. anti_join
+
+        full_join
+        semi_join
+        anti_join
 
 3. Set operations: 
-        i. intersect
-        ii. union
-        iii. setdiff
+        
+        intersect
+        union
+        setdiff
 
-## 1. More on the types of joins 
+# Mutating joins 
 
+```{r, echo = T}
+left = left_join(day1, day2, by = 'ID')
+right = right_join(day1, day2, by = 'ID')
+inner= inner_join(day1, day2, by = 'ID')
+full = full_join(day1, day2, by = 'ID')
+semi = semi_join(day1, day2, by = 'ID')
+anti = anti_join(day1, day2, by = 'ID')
+```
+
+```{r, echo = F}
+kable(right,'html', results = 'asis') %>% 
+        kable_styling(bootstrap_options = "striped", full_width = F,position = 'left')
+```
  
- 
- 
- \vspace{2mm} 
- 
+# dplyr versus data.table versus base R
 
-## 3. dplyr versus data.table versus base R
-
-* data.table
-
+## data.table
 
 ```{r, eval = F}
 rbind(...,use.names = T, fill = F, idcol = NULL)
 ```
 
-Base R 
+## Base R 
 ```{r, eval = F}
 rbind(...,deparse.level = 1, make.row.names = T)
 ```
 
+```{r}
+cbind()
+```
 
-## 4. When joining can get tricky... 
+
+# When joining can get tricky... 
 - Joining with columns having the same name but different encoding (UTF-8 vs. Latin)
 - Joining with columns having different storage types (factors, integers, bit64, dates)
--
+- 
 
-## 5. How to choose?
+# How to choose?
 
 Dplyr has come a long way in terms of speed. Recent benchmarking conducted in Stack Overflow showed that dplyr starts to substantially lag when there are a large number of groups (>100k). 
+
+
 While this point is contentious, if you've been a long standing tidyversalist, then you might find data.table's syntax more difficult to learn.   
 
 
-
-## 5. Advantages and Disadvantages of each approach
-
-
-
-
-## 6. More!
+# More!
 
 There are additional types of joins not covered here: rolling joins, scaling joins
 
+Rolling joins are used in circumstances where you want to map a dataframe to another based but you lack a common ID e.g. merging 
 Resources
 
 
 
-## Thank-you 
+# Thank-you 
 
 \small
 \textbf{Committee member \& unofficial 3rd supervisor} \newline

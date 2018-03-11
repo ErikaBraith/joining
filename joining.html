@@ -5,9 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="Erika Braithwaite ewline" />
+  <meta name="author" content="Erika Braithwaite, PhD" />
   <meta name="date" content="2018-03-15" />
-  <title>Joining dataframes using dplyr</title>
+  <title>Joining dataframes in R using dplyr</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 div.sourceCode { overflow-x: auto; }
@@ -51,87 +51,141 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Joining dataframes using dplyr</h1>
+  <h1 class="title">Joining dataframes in R using dplyr</h1>
   <h1 class="subtitle">RLadies Montreal</h1>
   <p class="author">
-Erika Braithwaite<br />
-ewline
+Erika Braithwaite, PhD
   </p>
   <p class="date">March 15, 2018</p>
 </div>
-<div class="slide section level2">
-
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages('pacman')</span>
-pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, data.table, dplyr)</code></pre></div>
-</div>
-<div id="what-is-joining" class="slide section level2">
-<h2>1. What is joining?</h2>
+<div id="what-is-joining" class="slide section level1">
+<h1>What is joining?</h1>
 <p>We often run into scenarios where we need to join two dataframes together. Let’s say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.</p>
+<p>Set up</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages('pacman')</span>
+pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, kableExtra, formattable, data.table, dplyr)</code></pre></div>
+<p>Make some data</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>],
                  <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">15</span>),<span class="dv">2</span>))
 
 day2 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">6</span><span class="op">:</span><span class="dv">17</span>],
                  <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">20</span>),<span class="dv">2</span>))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">list</span>(day1, day2))</code></pre></div>
-<table class="kable_wrapper">
+</div>
+<div id="our-data" class="slide section level1">
+<h1>Our data</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">list</span>(day1, day2), <span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> F, <span class="dt">font_size =</span> <span class="dv">14</span>)</code></pre></div>
+<table class="kable_wrapper table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>
 <table>
 <thead>
-<tr class="header">
-<th align="left">ID</th>
-<th align="right">IQ</th>
+<tr>
+<th style="text-align:left;">
+ID
+</th>
+<th style="text-align:right;">
+IQ
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">A</td>
-<td align="right">123.01</td>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+95.95
+</td>
 </tr>
-<tr class="even">
-<td align="left">B</td>
-<td align="right">91.22</td>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+105.72
+</td>
 </tr>
-<tr class="odd">
-<td align="left">C</td>
-<td align="right">104.85</td>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+100.68
+</td>
 </tr>
-<tr class="even">
-<td align="left">D</td>
-<td align="right">87.75</td>
+<tr>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:right;">
+124.91
+</td>
 </tr>
-<tr class="odd">
-<td align="left">E</td>
-<td align="right">102.77</td>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+89.20
+</td>
 </tr>
-<tr class="even">
-<td align="left">F</td>
-<td align="right">121.11</td>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+79.34
+</td>
 </tr>
-<tr class="odd">
-<td align="left">G</td>
-<td align="right">113.35</td>
+<tr>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:right;">
+91.97
+</td>
 </tr>
-<tr class="even">
-<td align="left">H</td>
-<td align="right">94.28</td>
+<tr>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:right;">
+99.40
+</td>
 </tr>
-<tr class="odd">
-<td align="left">I</td>
-<td align="right">93.82</td>
+<tr>
+<td style="text-align:left;">
+I
+</td>
+<td style="text-align:right;">
+69.22
+</td>
 </tr>
-<tr class="even">
-<td align="left">J</td>
-<td align="right">113.56</td>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+107.92
+</td>
 </tr>
-<tr class="odd">
-<td align="left">K</td>
-<td align="right">133.11</td>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+110.49
+</td>
 </tr>
-<tr class="even">
-<td align="left">L</td>
-<td align="right">122.20</td>
+<tr>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+89.03
+</td>
 </tr>
 </tbody>
 </table>
@@ -139,59 +193,111 @@ day2 =<span class="st">  </span><span class="kw">data.table</span>(<span class="
 <td>
 <table>
 <thead>
-<tr class="header">
-<th align="left">ID</th>
-<th align="right">IQ</th>
+<tr>
+<th style="text-align:left;">
+ID
+</th>
+<th style="text-align:right;">
+IQ
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">F</td>
-<td align="right">70.99</td>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+109.21
+</td>
 </tr>
-<tr class="even">
-<td align="left">G</td>
-<td align="right">109.60</td>
+<tr>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:right;">
+70.52
+</td>
 </tr>
-<tr class="odd">
-<td align="left">H</td>
-<td align="right">112.60</td>
+<tr>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:right;">
+66.83
+</td>
 </tr>
-<tr class="even">
-<td align="left">I</td>
-<td align="right">128.01</td>
+<tr>
+<td style="text-align:left;">
+I
+</td>
+<td style="text-align:right;">
+117.42
+</td>
 </tr>
-<tr class="odd">
-<td align="left">J</td>
-<td align="right">104.34</td>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+133.07
+</td>
 </tr>
-<tr class="even">
-<td align="left">K</td>
-<td align="right">106.72</td>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+102.46
+</td>
 </tr>
-<tr class="odd">
-<td align="left">L</td>
-<td align="right">97.89</td>
+<tr>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+90.94
+</td>
 </tr>
-<tr class="even">
-<td align="left">M</td>
-<td align="right">90.58</td>
+<tr>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:right;">
+107.52
+</td>
 </tr>
-<tr class="odd">
-<td align="left">N</td>
-<td align="right">119.20</td>
+<tr>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:right;">
+126.97
+</td>
 </tr>
-<tr class="even">
-<td align="left">O</td>
-<td align="right">109.07</td>
+<tr>
+<td style="text-align:left;">
+O
+</td>
+<td style="text-align:right;">
+112.01
+</td>
 </tr>
-<tr class="odd">
-<td align="left">P</td>
-<td align="right">109.79</td>
+<tr>
+<td style="text-align:left;">
+P
+</td>
+<td style="text-align:right;">
+112.96
+</td>
 </tr>
-<tr class="even">
-<td align="left">Q</td>
-<td align="right">114.45</td>
+<tr>
+<td style="text-align:left;">
+Q
+</td>
+<td style="text-align:right;">
+99.29
+</td>
 </tr>
 </tbody>
 </table>
@@ -200,50 +306,211 @@ day2 =<span class="st">  </span><span class="kw">data.table</span>(<span class="
 </tbody>
 </table>
 </div>
-<div id="three-types-of-joins-in-dplyr" class="slide section level2">
-<h2>2. Three types of joins in dplyr</h2>
+<div id="threeish-types-of-joins-in-dplyr" class="slide section level1">
+<h1>Three(ish) types of joins in dplyr</h1>
 <p>If we wanted to merge the two dataframes together, we can use dplyr’s joining functions:</p>
 <ol style="list-style-type: decimal">
-<li><p>Mutating join: add a new variables to one table from matching rows in another i. left_join ii. right_join iii. inner_join iv. outer_join</p></li>
-<li><p>Filtering join: filter observations from one tables based on whether they match i. semi_join ii. anti_join</p></li>
-<li><p>Set operations: i. intersect ii. union iii. setdiff</p></li>
+<li><p>Mutating join: add a new variables to one table from matching rows in another</p>
+<pre><code>left_join
+right_join
+inner_join</code></pre></li>
+<li><p>Filtering join: filter observations from one tables based on whether they match</p>
+<pre><code>full_join
+semi_join
+anti_join</code></pre></li>
+<li><p>Set operations:</p>
+<pre><code>intersect
+union
+setdiff</code></pre></li>
 </ol>
 </div>
-<div id="more-on-the-types-of-joins" class="slide section level2">
-<h2>1. More on the types of joins</h2>
-
+<div id="mutating-joins" class="slide section level1">
+<h1>Mutating joins</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">left =<span class="st"> </span><span class="kw">left_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)
+right =<span class="st"> </span><span class="kw">right_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)
+inner=<span class="st"> </span><span class="kw">inner_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)
+full =<span class="st"> </span><span class="kw">full_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)
+semi =<span class="st"> </span><span class="kw">semi_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)
+anti =<span class="st"> </span><span class="kw">anti_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>)</code></pre></div>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+ID
+</th>
+<th style="text-align:right;">
+IQ.x
+</th>
+<th style="text-align:right;">
+IQ.y
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+79.34
+</td>
+<td style="text-align:right;">
+109.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:right;">
+91.97
+</td>
+<td style="text-align:right;">
+70.52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:right;">
+99.40
+</td>
+<td style="text-align:right;">
+66.83
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I
+</td>
+<td style="text-align:right;">
+69.22
+</td>
+<td style="text-align:right;">
+117.42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+107.92
+</td>
+<td style="text-align:right;">
+133.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+110.49
+</td>
+<td style="text-align:right;">
+102.46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+89.03
+</td>
+<td style="text-align:right;">
+90.94
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+107.52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+126.97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+O
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+112.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+112.96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+99.29
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="dplyr-versus-data.table-versus-base-r" class="slide section level2">
-<h2>3. dplyr versus data.table versus base R</h2>
-<ul>
-<li>data.table</li>
-</ul>
+<div id="dplyr-versus-data.table-versus-base-r" class="slide section level1">
+<h1>dplyr versus data.table versus base R</h1>
+<h2 id="data.table">data.table</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbind</span>(...,<span class="dt">use.names =</span> T, <span class="dt">fill =</span> F, <span class="dt">idcol =</span> <span class="ot">NULL</span>)</code></pre></div>
-<p>Base R</p>
+<h2 id="base-r">Base R</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbind</span>(...,<span class="dt">deparse.level =</span> <span class="dv">1</span>, <span class="dt">make.row.names =</span> T)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>()</code></pre></div>
+<pre><code>## NULL</code></pre>
 </div>
-<div id="when-joining-can-get-tricky" class="slide section level2">
-<h2>4. When joining can get tricky…</h2>
+<div id="when-joining-can-get-tricky" class="slide section level1">
+<h1>When joining can get tricky…</h1>
 <ul>
 <li>Joining with columns having the same name but different encoding (UTF-8 vs. Latin)</li>
 <li>Joining with columns having different storage types (factors, integers, bit64, dates)</li>
 <li></li>
 </ul>
 </div>
-<div id="how-to-choose" class="slide section level2">
-<h2>5. How to choose?</h2>
-<p>Dplyr has come a long way in terms of speed. Recent benchmarking conducted in Stack Overflow showed that dplyr starts to substantially lag when there are a large number of groups (&gt;100k). While this point is contentious, if you’ve been a long standing tidyversalist, then you might find data.table’s syntax more difficult to learn.</p>
+<div id="how-to-choose" class="slide section level1">
+<h1>How to choose?</h1>
+<p>Dplyr has come a long way in terms of speed. Recent benchmarking conducted in Stack Overflow showed that dplyr starts to substantially lag when there are a large number of groups (&gt;100k).</p>
+<p>While this point is contentious, if you’ve been a long standing tidyversalist, then you might find data.table’s syntax more difficult to learn.</p>
 </div>
-<div id="advantages-and-disadvantages-of-each-approach" class="slide section level2">
-<h2>5. Advantages and Disadvantages of each approach</h2>
-</div>
-<div id="more" class="slide section level2">
-<h2>6. More!</h2>
+<div id="more" class="slide section level1">
+<h1>More!</h1>
 <p>There are additional types of joins not covered here: rolling joins, scaling joins</p>
-<p>Resources</p>
+<p>Rolling joins are used in circumstances where you want to map a dataframe to another based but you lack a common ID e.g. merging Resources</p>
 </div>
-<div id="thank-you" class="slide section level2">
-<h2>Thank-you</h2>
+<div id="thank-you" class="slide section level1">
+<h1>Thank-you</h1>
 <p> Dr. Gavin Shaddick, University of Bath, Dept Math</p>
 <p>  Dr. David Buckeridge, McGill EBOH Dr. Sarah Henderson, BCCDC &amp; UBC SPPH</p>
 

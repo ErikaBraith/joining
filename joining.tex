@@ -28,11 +28,51 @@
 }{}
 \newif\ifbibliography
 \hypersetup{
-            pdftitle={Joining dataframes using dplyr},
-            pdfauthor={Erika Braithwaite},
+            pdftitle={Joining dataframes in R using dplyr},
+            pdfauthor={Erika Braithwaite, PhD},
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
 
 % Prevent slide breaks in the middle of a paragraph:
 \widowpenalties 1 10000
@@ -72,29 +112,357 @@
 \usepackage{mathtools}
 \usetikzlibrary{shadows,shapes,arrows,automata,calc,shapes.geometric,shapes.multipart,positioning,trees}
 
-\title{Joining dataframes using dplyr}
+\title{Joining dataframes in R using dplyr}
 \subtitle{RLadies Montreal}
-\author{Erika Braithwaite \newline}
+\author{Erika Braithwaite, PhD}
 \date{March 15, 2018}
 
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}{1. What is joining?}
+\begin{frame}[fragile]{What is joining?}
 
-Stuff and things
+We often run into scenarios where we need to join two dataframes
+together. Let's say we had some students who were given an IQ test at a
+career fair. Some of the students showed up at on both days, but not
+all. They were given unique alphanumeric identifiers.
+
+Set up
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#install.packages('pacman')}
+\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(knitr, kableExtra, formattable, data.table, dplyr,  rmarkdown)}
+\end{Highlighting}
+\end{Shaded}
+
+Make some data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{day1 =}\StringTok{  }\KeywordTok{data.table}\NormalTok{(}\DataTypeTok{ID=}\NormalTok{LETTERS[}\DecValTok{1}\OperatorTok{:}\DecValTok{12}\NormalTok{],}
+                 \DataTypeTok{IQ=}\KeywordTok{round}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{),}\DecValTok{2}\NormalTok{))}
+
+\NormalTok{day2 =}\StringTok{  }\KeywordTok{data.table}\NormalTok{(}\DataTypeTok{ID=}\NormalTok{LETTERS[}\DecValTok{6}\OperatorTok{:}\DecValTok{17}\NormalTok{],}
+                 \DataTypeTok{IQ=}\KeywordTok{round}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{20}\NormalTok{),}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \end{frame}
 
-\begin{frame}{1. Other stuff}
+\begin{frame}[fragile]{Our data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{list}\NormalTok{(day1, day2), }\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ F, }\DataTypeTok{font_size =} \DecValTok{14}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+A
+
+93.01
+
+B
+
+82.54
+
+C
+
+74.53
+
+D
+
+114.50
+
+E
+
+74.33
+
+F
+
+87.11
+
+G
+
+81.42
+
+H
+
+107.71
+
+I
+
+113.88
+
+J
+
+113.76
+
+K
+
+110.13
+
+L
+
+107.80
+
+ID
+
+IQ
+
+F
+
+106.06
+
+G
+
+92.50
+
+H
+
+91.12
+
+I
+
+99.29
+
+J
+
+115.30
+
+K
+
+90.55
+
+L
+
+84.07
+
+M
+
+49.12
+
+N
+
+137.48
+
+O
+
+94.60
+
+P
+
+123.68
+
+Q
+
+100.25
+
+\end{frame}
+
+\begin{frame}[fragile]{Three(ish) types of joins in dplyr}
+
+If we wanted to merge the two dataframes together, we can use dplyr's
+joining functions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Mutating join: add a new variables to one table from matching rows in
+  another
+
+\begin{verbatim}
+left_join
+right_join
+inner_join
+\end{verbatim}
+\item
+  Filtering join: filter observations from one tables based on whether
+  they match
+
+\begin{verbatim}
+full_join
+semi_join
+anti_join
+\end{verbatim}
+\item
+  Set operations:
+
+\begin{verbatim}
+intersect
+union
+setdiff
+\end{verbatim}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]{Mutating joins}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{left =}\StringTok{ }\KeywordTok{left_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\NormalTok{right =}\StringTok{ }\KeywordTok{right_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\NormalTok{inner=}\StringTok{ }\KeywordTok{inner_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\NormalTok{full =}\StringTok{ }\KeywordTok{full_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\NormalTok{semi =}\StringTok{ }\KeywordTok{semi_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\NormalTok{anti =}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ.x
+
+IQ.y
+
+F
+
+87.11
+
+106.06
+
+G
+
+81.42
+
+92.50
+
+H
+
+107.71
+
+91.12
+
+I
+
+113.88
+
+99.29
+
+J
+
+113.76
+
+115.30
+
+K
+
+110.13
+
+90.55
+
+L
+
+107.80
+
+84.07
+
+M
+
+NA
+
+49.12
+
+N
+
+NA
+
+137.48
+
+O
+
+NA
+
+94.60
+
+P
+
+NA
+
+123.68
+
+Q
+
+NA
+
+100.25
+
+\end{frame}
+
+\begin{frame}[fragile]{dplyr versus data.table versus base R}
+
+\begin{block}{data.table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rbind}\NormalTok{(...,}\DataTypeTok{use.names =}\NormalTok{ T, }\DataTypeTok{fill =}\NormalTok{ F, }\DataTypeTok{idcol =} \OtherTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{block}
+
+\begin{block}{Base R}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rbind}\NormalTok{(...,}\DataTypeTok{deparse.level =} \DecValTok{1}\NormalTok{, }\DataTypeTok{make.row.names =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cbind}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NULL
+\end{verbatim}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}{When joining can get tricky\ldots{}}
 
 \begin{itemize}
-\tightlist
 \item
-  Blablabla
+  Joining with columns having the same name but different encoding
+  (UTF-8 vs.~Latin)
+\item
+  Joining with columns having different storage types (factors,
+  integers, bit64, dates)
+\item
 \end{itemize}
 
-\vspace{2mm}
+\end{frame}
+
+\begin{frame}{How to choose?}
+
+Dplyr has come a long way in terms of speed. Recent benchmarking
+conducted in Stack Overflow showed that dplyr starts to substantially
+lag when there are a large number of groups (\textgreater{}100k).
+
+While this point is contentious, if you've been a long standing
+tidyversalist, then you might find data.table's syntax more difficult to
+learn.
+
+\end{frame}
+
+\begin{frame}{More!}
+
+There are additional types of joins not covered here: rolling joins,
+scaling joins
+
+Rolling joins are used in circumstances where you want to map a
+dataframe to another based but you lack a common ID e.g.~merging
+Resources
 
 \end{frame}
 

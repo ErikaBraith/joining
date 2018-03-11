@@ -4,3 +4,8 @@
 # log files
 *.log
 
+# Latex files
+*.tex
+
+# html
+*.html
