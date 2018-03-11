@@ -1,0 +1,114 @@
+---
+title: "Joining dataframes using dplyr"
+author: "Erika Braithwaite  \newline"
+date: "March 15, 2018"
+output:
+  slidy_presentation: default
+  beamer_presentation: default
+  ioslides_presentation: default
+incremental: yes
+subtitle: RLadies Montreal
+theme: metropolis
+header-includes:
+- \usepackage{tikz}
+- \usepackage{pgfplots}
+- \usepackage{graphicx}
+- \usepackage{bm}
+- \usepackage{amsmath}
+- \usepackage{amssymb}
+- \usepackage{mathtools}
+- \usetikzlibrary{shadows,shapes,arrows,automata,calc,shapes.geometric,shapes.multipart,positioning,trees}
+---
+
+## 1. What is joining?   
+
+We often run into scenarios where we need to join two dataframes together. 
+How is joining in dplyr different than rbind or cbind?
+
+or even bind_rows
+
+
+
+## 2. Three types of joins in dplyr 
+
+1. Mutating join: add a new variables to one table from matching rows in another
+2. Filtering join: filter observations from one tables based on whether they match 
+3. Set operations: 
+
+
+## 1. More on the types of joins 
+
+ 
+ 
+ 
+ \vspace{2mm} 
+ 
+
+## 3. dplyr versus data.table versus base R
+
+* data.table
+
+
+```{r, eval = F}
+rbind(...,use.names = T, fill = F, idcol = NULL)
+```
+
+Base R 
+```{r, eval = F}
+rbind(...,deparse.level = 1, make.row.names = T)
+```
+
+
+## 4. When joining can get tricky... 
+- Joining with columns having the same name but different encoding (UTF-8 vs. Latin)
+- Joining with columns having different storage types (factors, integers, bit64, dates)
+-
+
+## 5. How to choose?
+
+Dplyr has come a long way in terms of speed. Recent benchmarking conducted in Stack Overflow showed that dplyr starts to substantially lag when there are a large number of groups (>100k). 
+While this point is contentious, if you've been a long standing tidyversalist, then you might find data.table's syntax more difficult to learn.   
+
+
+
+## 5. Advantages and Disadvantages of each approach
+
+
+
+
+ 
+
+
+## Thank-you 
+
+\small
+\textbf{Committee member \& unofficial 3rd supervisor} \newline
+Dr. Gavin Shaddick, University of Bath, Dept Math   
+
+\vspace{2mm}
+\textbf{Supervisors} \newline
+Dr. David Buckeridge, McGill EBOH \newline
+Dr. Sarah Henderson, BCCDC \& UBC SPPH 
+
+\vspace{2mm}
+
+Dr. Finn Lindgren, INLA research & development team 
+
+\vspace{2mm}
+
+British Columbia Centre for Disease Control (BCCDC)  
+
+\vspace{2mm}
+
+McGill Surveillance Lab
+
+\vspace{5mm}
+
+\definecolor{tempcolor2}{HTML}{ADCAB4}
+\setbeamercolor{tealbox}{bg=tempcolor2!75}
+\begin{beamercolorbox}[sep=1mm]{tealbox}
+\footnotesize
+Morrison KT, Shaddick G, Henderson SB, Buckeridge DL. 2016. `A latent process model for forecasting multiple time series in environmental public health surveillance.' \emph{Statistics in Medicine.} DOI: 10.1002/sim.6904
+\end{beamercolorbox}
+
+
