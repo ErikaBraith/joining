@@ -59,17 +59,154 @@ ewline
   </p>
   <p class="date">March 15, 2018</p>
 </div>
+<div class="slide section level2">
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages('pacman')</span>
+pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, data.table, dplyr)</code></pre></div>
+</div>
 <div id="what-is-joining" class="slide section level2">
 <h2>1. What is joining?</h2>
-<p>We often run into scenarios where we need to join two dataframes together. How is joining in dplyr different than rbind or cbind?</p>
-<p>or even bind_rows</p>
+<p>We often run into scenarios where we need to join two dataframes together. Let’s say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>],
+                 <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">15</span>),<span class="dv">2</span>))
+
+day2 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">6</span><span class="op">:</span><span class="dv">17</span>],
+                 <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">20</span>),<span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">list</span>(day1, day2))</code></pre></div>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ID</th>
+<th align="right">IQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="right">123.01</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="right">91.22</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="right">104.85</td>
+</tr>
+<tr class="even">
+<td align="left">D</td>
+<td align="right">87.75</td>
+</tr>
+<tr class="odd">
+<td align="left">E</td>
+<td align="right">102.77</td>
+</tr>
+<tr class="even">
+<td align="left">F</td>
+<td align="right">121.11</td>
+</tr>
+<tr class="odd">
+<td align="left">G</td>
+<td align="right">113.35</td>
+</tr>
+<tr class="even">
+<td align="left">H</td>
+<td align="right">94.28</td>
+</tr>
+<tr class="odd">
+<td align="left">I</td>
+<td align="right">93.82</td>
+</tr>
+<tr class="even">
+<td align="left">J</td>
+<td align="right">113.56</td>
+</tr>
+<tr class="odd">
+<td align="left">K</td>
+<td align="right">133.11</td>
+</tr>
+<tr class="even">
+<td align="left">L</td>
+<td align="right">122.20</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ID</th>
+<th align="right">IQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">F</td>
+<td align="right">70.99</td>
+</tr>
+<tr class="even">
+<td align="left">G</td>
+<td align="right">109.60</td>
+</tr>
+<tr class="odd">
+<td align="left">H</td>
+<td align="right">112.60</td>
+</tr>
+<tr class="even">
+<td align="left">I</td>
+<td align="right">128.01</td>
+</tr>
+<tr class="odd">
+<td align="left">J</td>
+<td align="right">104.34</td>
+</tr>
+<tr class="even">
+<td align="left">K</td>
+<td align="right">106.72</td>
+</tr>
+<tr class="odd">
+<td align="left">L</td>
+<td align="right">97.89</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="right">90.58</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="right">119.20</td>
+</tr>
+<tr class="even">
+<td align="left">O</td>
+<td align="right">109.07</td>
+</tr>
+<tr class="odd">
+<td align="left">P</td>
+<td align="right">109.79</td>
+</tr>
+<tr class="even">
+<td align="left">Q</td>
+<td align="right">114.45</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="three-types-of-joins-in-dplyr" class="slide section level2">
 <h2>2. Three types of joins in dplyr</h2>
+<p>If we wanted to merge the two dataframes together, we can use dplyr’s joining functions:</p>
 <ol style="list-style-type: decimal">
-<li>Mutating join: add a new variables to one table from matching rows in another</li>
-<li>Filtering join: filter observations from one tables based on whether they match</li>
-<li>Set operations:</li>
+<li><p>Mutating join: add a new variables to one table from matching rows in another i. left_join ii. right_join iii. inner_join iv. outer_join</p></li>
+<li><p>Filtering join: filter observations from one tables based on whether they match i. semi_join ii. anti_join</p></li>
+<li><p>Set operations: i. intersect ii. union iii. setdiff</p></li>
 </ol>
 </div>
 <div id="more-on-the-types-of-joins" class="slide section level2">
@@ -99,6 +236,11 @@ ewline
 </div>
 <div id="advantages-and-disadvantages-of-each-approach" class="slide section level2">
 <h2>5. Advantages and Disadvantages of each approach</h2>
+</div>
+<div id="more" class="slide section level2">
+<h2>6. More!</h2>
+<p>There are additional types of joins not covered here: rolling joins, scaling joins</p>
+<p>Resources</p>
 </div>
 <div id="thank-you" class="slide section level2">
 <h2>Thank-you</h2>

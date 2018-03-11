@@ -20,21 +20,49 @@ header-includes:
 - \usetikzlibrary{shadows,shapes,arrows,automata,calc,shapes.geometric,shapes.multipart,positioning,trees}
 ---
 
+
+## 0. What is joining?
+
+We often run into scenarios where we need to join two dataframes together. Let's say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.
+
+
+Set up
+```{r}
+#install.packages('pacman')
+pacman::p_load(knitr, data.table, dplyr)
+```
+
 ## 1. What is joining?   
 
-We often run into scenarios where we need to join two dataframes together. 
-How is joining in dplyr different than rbind or cbind?
+```{r, echo = T}
+day1 =  data.table(ID=LETTERS[1:12],
+                 IQ=round(rnorm(12, 100, 15),2))
 
-or even bind_rows
-
-
+day2 =  data.table(ID=LETTERS[6:17],
+                 IQ=round(rnorm(12, 100, 20),2))
+```
+```{r, echo = T}
+kable(list(day1, day2))
+```
 
 ## 2. Three types of joins in dplyr 
 
-1. Mutating join: add a new variables to one table from matching rows in another
-2. Filtering join: filter observations from one tables based on whether they match 
-3. Set operations: 
+If we wanted to merge the two dataframes together, we can use dplyr's joining functions:
 
+1. Mutating join: add a new variables to one table from matching rows in another
+        i. left_join
+        ii. right_join
+        iii. inner_join
+        iv. outer_join
+
+2. Filtering join: filter observations from one tables based on whether they match 
+        i. semi_join
+        ii. anti_join
+
+3. Set operations: 
+        i. intersect
+        ii. union
+        iii. setdiff
 
 ## 1. More on the types of joins 
 
@@ -76,7 +104,12 @@ While this point is contentious, if you've been a long standing tidyversalist, t
 
 
 
- 
+## 6. More!
+
+There are additional types of joins not covered here: rolling joins, scaling joins
+
+Resources
+
 
 
 ## Thank-you 
