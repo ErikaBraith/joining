@@ -7,20 +7,36 @@ pacman::p_load(data.table, dplyr, tinytex, knitr)
 
 # Scenario 1 
 day1 =  data.table(ID=LETTERS[1:12],
-                 y1=round(rnorm(4),4))
+                   IQ=round(rnorm(12, 100, 15),2))
 
 day2 =  data.table(ID=LETTERS[6:17],
-                 y2=round(rnorm(6),4))
+                   IQ=round(rnorm(12, 100, 20),2))
 
 day1
 day2
 
-left = left_join(day1, day2)
-right = right_join(day1, day2)
-inner= inner_join(day1, day2)
-full = full_join(day1, day2)
-semi = semi_join(day1, day2)
-anti = anti_join(day1, day2)
+left = left_join(day1, day2, by = 'ID')
+right = right_join(day1, day2 , by = 'ID')
+inner= inner_join(day1, day2, by = 'ID')
+full = full_join(day1, day2, by = 'ID')
+semi = semi_join(day1, day2, by = 'ID')
+anti = anti_join(day1, day2, by = 'ID')
+inter = dplyr::intersect(day1, day2, by = 'ID')
+united = union(day1, day2, by = 'ID')
+setdif = setdiff(day1, day2, by = 'ID')
+       
+left
+right
+inner
+full
+semi
+anti
+inter
+united
+setdif 
 
-        
+inter2 = dplyr::intersect(day1, day2)
+inter2
+
+
 

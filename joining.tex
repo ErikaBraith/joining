@@ -73,6 +73,15 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 % Prevent slide breaks in the middle of a paragraph:
 \widowpenalties 1 10000
@@ -132,7 +141,8 @@ Set up
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#install.packages('pacman')}
-\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(knitr, kableExtra, formattable, data.table, dplyr,  rmarkdown)}
+\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(knitr, kableExtra, formattable, data.table, dplyr, }
+\NormalTok{               rmarkdown, magrittr)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -148,16 +158,12 @@ Make some data
 \end{Highlighting}
 \end{Shaded}
 
+There are 12 individuals on day 1 and 12 individuals on day 2. 17 people
+have a single measurement while 5 have 2 measurements.
+
 \end{frame}
 
-\begin{frame}[fragile]{Our data}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{kable}\NormalTok{(}\KeywordTok{list}\NormalTok{(day1, day2), }\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ F, }\DataTypeTok{font_size =} \DecValTok{14}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{frame}{Our data}
 
 ID
 
@@ -165,51 +171,51 @@ IQ
 
 A
 
-78.35
+83.99
 
 B
 
-119.29
+116.49
 
 C
 
-110.72
+89.10
 
 D
 
-93.33
+106.22
 
 E
 
-110.90
+113.41
 
 F
 
-78.89
+118.04
 
 G
 
-102.11
+100.00
 
 H
 
-83.29
+102.54
 
 I
 
-97.50
+95.26
 
 J
 
-110.44
+97.08
 
 K
 
-117.00
+110.38
 
 L
 
-109.13
+96.49
 
 ID
 
@@ -217,187 +223,166 @@ IQ
 
 F
 
-136.21
+86.15
 
 G
 
-80.07
+92.67
 
 H
 
-86.52
+87.03
 
 I
 
-85.30
+89.36
 
 J
 
-92.39
+87.63
 
 K
 
-103.30
+121.33
 
 L
 
-89.24
+84.84
 
 M
 
-78.03
+91.99
 
 N
 
-98.81
+119.99
 
 O
 
-108.36
+98.95
 
 P
 
-100.38
+90.41
 
 Q
 
-109.75
+111.27
 
-\end{frame}
-
-\begin{frame}[fragile]{Three(ish) types of joins in dplyr}
-
-If we wanted to merge the two dataframes together, we can use dplyr's
-joining functions:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Mutating join: add a new variables to one table from matching rows in
-  another
-
-\begin{verbatim}
-left_join
-right_join
-inner_join
-\end{verbatim}
-\item
-  Filtering join: filter observations from one tables based on whether
-  they match
-
-\begin{verbatim}
-full_join
-semi_join
-anti_join
-\end{verbatim}
-\item
-  Set operations:
-
-\begin{verbatim}
-intersect
-union
-setdiff
-\end{verbatim}
-\end{enumerate}
+Let's explore the three(ish) types of joins in dplyr
 
 \end{frame}
 
 \begin{frame}[fragile]{Mutating joins}
 
+\begin{block}{Mutating join: \textbf{add a new variables} to one table
+from matching rows in another}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{left\_join}: prioritizes left df
+\item
+  \texttt{right\_join}: prioritizes righ df
+\item
+  \texttt{inner\_join}: only retains rows in both dfs
+\item
+  \texttt{full\_join}: retains all rows
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Filtering joins}
+
+\begin{block}{Filtering join: \textbf{filter observations} from the
+primary based on whether they are present in the secondary table}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{semi\_join}: retains rows in the primary table that are also
+  present in secondary table
+\item
+  \texttt{anti\_join}: retains rows in the primary that are not present
+  in the secondary table
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Set operations}
+
+\begin{block}{Set}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{intersect}:
+\item
+  \texttt{union}:
+\item
+  \texttt{setdiff}:
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Main arguments}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{left =}\StringTok{ }\KeywordTok{left_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{right =}\StringTok{ }\KeywordTok{right_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{inner=}\StringTok{ }\KeywordTok{inner_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{full =}\StringTok{ }\KeywordTok{full_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{semi =}\StringTok{ }\KeywordTok{semi_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{anti =}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\KeywordTok{right_join}\NormalTok{(x, y, }\DataTypeTok{by =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{copy =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{suffix =} \KeywordTok{c}\NormalTok{(}\StringTok{'.x'}\NormalTok{, }\StringTok{'.y'}\NormalTok{), ...)}
 \end{Highlighting}
 \end{Shaded}
 
-ID
+X and Y are the two dataframes we are joining by = key variable
+(typically a unique identifier). + primary key: unique in at table in
+the primary table which can be one or several columns + foreign key: the
+second table, which will be matched to the primary tables based on the
+primary key.
 
-IQ.x
+copy = suffix = R will add a suffix to columns when they have the same
+name
 
-IQ.y
+\end{frame}
 
-F
+\begin{frame}{Mutating joins}
 
-78.89
+\begin{figure}
+\centering
+\includegraphics{graphs/mutate.png}
+\caption{}
+\end{figure}
 
-136.21
+\end{frame}
 
-G
+\begin{frame}{Filtering joins}
 
-102.11
+\begin{figure}
+\centering
+\includegraphics{graphs/filter.png}
+\caption{}
+\end{figure}
 
-80.07
+\end{frame}
 
-H
+\begin{frame}{Set operations}
 
-83.29
-
-86.52
-
-I
-
-97.50
-
-85.30
-
-J
-
-110.44
-
-92.39
-
-K
-
-117.00
-
-103.30
-
-L
-
-109.13
-
-89.24
-
-M
-
-NA
-
-78.03
-
-N
-
-NA
-
-98.81
-
-O
-
-NA
-
-108.36
-
-P
-
-NA
-
-100.38
-
-Q
-
-NA
-
-109.75
+\begin{figure}
+\centering
+\includegraphics{graphs/set.png}
+\caption{}
+\end{figure}
 
 \end{frame}
 
 \begin{frame}[fragile]{dplyr versus data.table versus base R}
 
-\begin{block}{data.table}
+\begin{block}{Base R}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -405,15 +390,27 @@ NA
 \end{Highlighting}
 \end{Shaded}
 
+\texttt{merge}, \texttt{rbind}, and \texttt{cdind} * Slower than dplyr *
+Can't handle lists of dataframes * \texttt{rbind} returns an error when
+columns are not identical * \texttt{.id} arguments allows you to specify
+a name for each source dataframe
+
 \end{block}
 
 \begin{block}{Base R}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{rbind}\NormalTok{(...,}\DataTypeTok{deparse.level =} \DecValTok{1}\NormalTok{, }\DataTypeTok{make.row.names =}\NormalTok{ T)}
+\KeywordTok{merge}\NormalTok{(x, y, }\DataTypeTok{by =} \KeywordTok{intersect}\NormalTok{(}\KeywordTok{names}\NormalTok{(x), }\KeywordTok{names}\NormalTok{(y)),}
+      \DataTypeTok{by.x =}\NormalTok{ by, }\DataTypeTok{by.y =}\NormalTok{ by, }\DataTypeTok{all =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{all.x =}\NormalTok{ all, }\DataTypeTok{all.y =}\NormalTok{ all,}
+      \DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{suffixes =} \KeywordTok{c}\NormalTok{(}\StringTok{".x"}\NormalTok{,}\StringTok{".y"}\NormalTok{), }\DataTypeTok{no.dups =} \OtherTok{TRUE}\NormalTok{,}
+      \DataTypeTok{incomparables =} \OtherTok{NULL}\NormalTok{, ...)}
 \end{Highlighting}
 \end{Shaded}
+
+\end{block}
+
+\begin{block}{Data.table}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -462,41 +459,13 @@ scaling joins
 
 Rolling joins are used in circumstances where you want to map a
 dataframe to another based but you lack a common ID e.g.~merging
+observations based on logical arguments.
+
 Resources
 
 \end{frame}
 
 \begin{frame}{Thank-you}
-
-\small
-\textbf{Committee member \& unofficial 3rd supervisor} \newline
-Dr.~Gavin Shaddick, University of Bath, Dept Math
-
-\vspace{2mm} \textbf{Supervisors} \newline
-Dr.~David Buckeridge, McGill EBOH \newline
-Dr.~Sarah Henderson, BCCDC \& UBC SPPH
-
-\vspace{2mm}
-
-Dr.~Finn Lindgren, INLA research \& development team
-
-\vspace{2mm}
-
-British Columbia Centre for Disease Control (BCCDC)
-
-\vspace{2mm}
-
-McGill Surveillance Lab
-
-\vspace{5mm}
-
-\definecolor{tempcolor2}{HTML}{ADCAB4}
-\setbeamercolor{tealbox}{bg=tempcolor2!75}
-
-\begin{beamercolorbox}[sep=1mm]{tealbox}
-\footnotesize
-Morrison KT, Shaddick G, Henderson SB, Buckeridge DL. 2016. `A latent process model for forecasting multiple time series in environmental public health surveillance.' \emph{Statistics in Medicine.} DOI: 10.1002/sim.6904
-\end{beamercolorbox}
 
 \end{frame}
 

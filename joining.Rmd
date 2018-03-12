@@ -3,159 +3,138 @@ title: "Joining dataframes in R using dplyr"
 author: "Erika Braithwaite, PhD"
 date: "March 15, 2018"
 output:
-  beamer_presentation: default
   slidy_presentation: default
-  ioslides_presentation: default
-incremental: yes
+  beamer_presentation: default
 subtitle: RLadies Montreal
 theme: metropolis
-header-includes:
-- \usepackage{tikz}
-- \usepackage{pgfplots}
-- \usepackage{graphicx}
-- \usepackage{bm}
-- \usepackage{amsmath}
-- \usepackage{amssymb}
-- \usepackage{mathtools}
-- \usetikzlibrary{shadows,shapes,arrows,automata,calc,shapes.geometric,shapes.multipart,positioning,trees}
 ---
 
 
 # What is joining?
 
-We often run into scenarios where we need to join two dataframes together. Let's say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.
+We often run into scenarios where we need to join two dataframes together. Let's say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphabetic identifiers (A-Q).
 
 Set up
 ```{r}
 #install.packages('pacman')
-pacman::p_load(knitr, kableExtra, formattable, data.table, dplyr,  rmarkdown)
+pacman::p_load(knitr, kableExtra, formattable, data.table, dplyr, 
+               rmarkdown, magrittr)
 ```
 
 Make some data 
-
 ```{r, echo = T}
-day1 =  data.table(ID=LETTERS[1:12],
-                 IQ=round(rnorm(12, 100, 15),2))
+day1 =  data.table(ID=LETTERS[1:12], IQ=round(rnorm(12, 100, 15),2))
 
-day2 =  data.table(ID=LETTERS[6:17],
-                 IQ=round(rnorm(12, 100, 20),2))
+day2 =  data.table(ID=LETTERS[6:17],IQ=round(rnorm(12, 100, 20),2))
 ```
+There are 12 individuals on day 1 and 12 individuals on day 2. 17 people have a single measurement while 5 have 2 measurements.
 
 # Our data   
 
-```{r, echo = T, results = 'asis'}
+```{r, echo = F, results = 'asis'}
 kable(list(day1, day2), 'html') %>% 
-        kable_styling(full_width = F, font_size = 14)
+        kable_styling(full_width = F, font_size = 24)
 ```
+Let's explore the three(ish) types of joins in `dplyr`
 
-# Three(ish) types of joins in dplyr 
+# Mutating joins  
+#####  **add a new variables** to one table from matching rows in another
 
-If we wanted to merge the two dataframes together, we can use dplyr's joining functions:
+* `left_join`: prioritizes left df
+* `right_join`: prioritizes righ df
+* `inner_join`: only retains rows in both dfs
+* `full_join`: retains all rows
 
-1. Mutating join: add a new variables to one table from matching rows in another
+Left, right and full joins are considered outer joins because when a row doesn't match in an outer new, the new variables are filled with missing values. 
 
-        left_join
-        right_join
-        inner_join
+# Filtering joins 
+#####  **filter observations** from the primary based on whether they are present in the secondary table
 
-2. Filtering join: filter observations from one tables based on whether they match 
+* `semi_join`: retains rows in the primary table that are also present in secondary             table
+* `anti_join`: retains rows in the primary that are not present in the secondary table
 
-        full_join
-        semi_join
-        anti_join
+Filtering joins almost act like a filter in that the number of rows can change, bot not the columns. 
 
-3. Set operations: 
-        
-        intersect
-        union
-        setdiff
+# Set operations 
+##### ** combines operations**  in the dataset as if they were set elements   
+
+* `intersect`:
+* `union`:
+* `setdiff`:
+
+
+# Main arguments 
+
+`right_join(x, y, by = NULL, copy = FALSE, suffix = c('.x', '.y'), ...)`
+
+* `y` and `y` are the two dataframes we are joining 
+* `by` = primary key variable (typically a unique identifier) which can be one or several columns. The foreign key is the indentifier in the secondary table, which will be matched to the primary tables based on the primary key.
+* `copy` = 
+* `suffix` will add a suffix to columns when they have the same name, e.g.`x.IQ` and `y.IQ`.
 
 # Mutating joins 
 
-```{r, echo = T}
+```{r}
 left = left_join(day1, day2, by = 'ID')
 right = right_join(day1, day2, by = 'ID')
 inner= inner_join(day1, day2, by = 'ID')
 full = full_join(day1, day2, by = 'ID')
+```
+
+![](graphs/mutate.png)
+
+# Filtering joins 
+
+```{r}
 semi = semi_join(day1, day2, by = 'ID')
 anti = anti_join(day1, day2, by = 'ID')
 ```
 
-```{r, echo = F}
-kable(right,'html', results = 'asis') %>% 
-        kable_styling(bootstrap_options = "striped", full_width = F,position = 'left')
-```
- 
-# dplyr versus data.table versus base R
+![](graphs/filter.png)
 
-## data.table
 
-```{r, eval = F}
-rbind(...,use.names = T, fill = F, idcol = NULL)
-```
-
-## Base R 
-```{r, eval = F}
-rbind(...,deparse.level = 1, make.row.names = T)
-```
+# Set operations 
 
 ```{r}
-cbind()
+semi = semi_join(day1, day2, by = 'ID')
+anti = anti_join(day1, day2, by = 'ID')
 ```
 
+![](graphs/set.png)
+
+# dplyr versus ...
+
+##### Base R 
+
+`rbind`, and `cbind` 
+
+* Slower than `dplyr`
+* Can't handle lists of dataframes
+* `rbind` returns an error when columns are not identical 
+* `.id` arguments allows you to specify a name for each source dataframe
+
+#### Data.table
+
+While this point is contentious, if you've been a long standing tidyversalist, then you might find `data.table::merge` syntax more difficult to learn.   
+
+Some people prefer `dplyr` because of its transparency 
+* tells you what keys you're merging of (if not supplied)
+* rows are kept in existing order
+* also works with database tables 
 
 # When joining can get tricky... 
+
 - Joining with columns having the same name but different encoding (UTF-8 vs. Latin)
 - Joining with columns having different storage types (factors, integers, bit64, dates)
-- 
-
-# How to choose?
-
-Dplyr has come a long way in terms of speed. Recent benchmarking conducted in Stack Overflow showed that dplyr starts to substantially lag when there are a large number of groups (>100k). 
-
-
-While this point is contentious, if you've been a long standing tidyversalist, then you might find data.table's syntax more difficult to learn.   
-
 
 # More!
 
 There are additional types of joins not covered here: rolling joins, scaling joins
 
-Rolling joins are used in circumstances where you want to map a dataframe to another based but you lack a common ID e.g. merging 
-Resources
+Rolling joins are used in circumstances where you want merging observations based on logical arguments (i.e. range of date). 
 
-
+If you want to join 3 or more tables, go check out how a `list` and `reduce` from `base R` or `purrr::reduce` can help you.
 
 # Thank-you 
-
-\small
-\textbf{Committee member \& unofficial 3rd supervisor} \newline
-Dr. Gavin Shaddick, University of Bath, Dept Math   
-
-\vspace{2mm}
-\textbf{Supervisors} \newline
-Dr. David Buckeridge, McGill EBOH \newline
-Dr. Sarah Henderson, BCCDC \& UBC SPPH 
-
-\vspace{2mm}
-
-Dr. Finn Lindgren, INLA research & development team 
-
-\vspace{2mm}
-
-British Columbia Centre for Disease Control (BCCDC)  
-
-\vspace{2mm}
-
-McGill Surveillance Lab
-
-\vspace{5mm}
-
-\definecolor{tempcolor2}{HTML}{ADCAB4}
-\setbeamercolor{tealbox}{bg=tempcolor2!75}
-\begin{beamercolorbox}[sep=1mm]{tealbox}
-\footnotesize
-Morrison KT, Shaddick G, Henderson SB, Buckeridge DL. 2016. `A latent process model for forecasting multiple time series in environmental public health surveillance.' \emph{Statistics in Medicine.} DOI: 10.1002/sim.6904
-\end{beamercolorbox}
 
 
