@@ -63,7 +63,7 @@ Erika Braithwaite, PhD
 <p>We often run into scenarios where we need to join two dataframes together. Let’s say we had some students who were given an IQ test at a career fair. Some of the students showed up at on both days, but not all. They were given unique alphanumeric identifiers.</p>
 <p>Set up</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages('pacman')</span>
-pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, kableExtra, formattable, data.table, dplyr)</code></pre></div>
+pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, kableExtra, formattable, data.table, dplyr,  rmarkdown)</code></pre></div>
 <p>Make some data</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>],
                  <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">15</span>),<span class="dv">2</span>))
@@ -96,7 +96,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-95.95
+106.40
 </td>
 </tr>
 <tr>
@@ -104,7 +104,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-105.72
+125.65
 </td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-100.68
+89.18
 </td>
 </tr>
 <tr>
@@ -120,7 +120,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-124.91
+79.50
 </td>
 </tr>
 <tr>
@@ -128,7 +128,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-89.20
+101.80
 </td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@ E
 F
 </td>
 <td style="text-align:right;">
-79.34
+120.33
 </td>
 </tr>
 <tr>
@@ -144,7 +144,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-91.97
+117.84
 </td>
 </tr>
 <tr>
@@ -152,7 +152,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-99.40
+83.94
 </td>
 </tr>
 <tr>
@@ -160,7 +160,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-69.22
+89.12
 </td>
 </tr>
 <tr>
@@ -168,7 +168,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-107.92
+108.38
 </td>
 </tr>
 <tr>
@@ -176,7 +176,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-110.49
+55.86
 </td>
 </tr>
 <tr>
@@ -184,7 +184,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-89.03
+99.71
 </td>
 </tr>
 </tbody>
@@ -208,7 +208,7 @@ IQ
 F
 </td>
 <td style="text-align:right;">
-109.21
+57.66
 </td>
 </tr>
 <tr>
@@ -216,7 +216,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-70.52
+110.32
 </td>
 </tr>
 <tr>
@@ -224,7 +224,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-66.83
+99.52
 </td>
 </tr>
 <tr>
@@ -232,7 +232,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-117.42
+111.79
 </td>
 </tr>
 <tr>
@@ -240,7 +240,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-133.07
+105.56
 </td>
 </tr>
 <tr>
@@ -248,7 +248,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-102.46
+91.80
 </td>
 </tr>
 <tr>
@@ -256,7 +256,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-90.94
+107.56
 </td>
 </tr>
 <tr>
@@ -264,7 +264,7 @@ L
 M
 </td>
 <td style="text-align:right;">
-107.52
+91.16
 </td>
 </tr>
 <tr>
@@ -272,7 +272,7 @@ M
 N
 </td>
 <td style="text-align:right;">
-126.97
+80.96
 </td>
 </tr>
 <tr>
@@ -280,7 +280,7 @@ N
 O
 </td>
 <td style="text-align:right;">
-112.01
+110.70
 </td>
 </tr>
 <tr>
@@ -288,7 +288,7 @@ O
 P
 </td>
 <td style="text-align:right;">
-112.96
+75.56
 </td>
 </tr>
 <tr>
@@ -296,7 +296,7 @@ P
 Q
 </td>
 <td style="text-align:right;">
-99.29
+98.98
 </td>
 </tr>
 </tbody>
@@ -352,10 +352,10 @@ IQ.y
 F
 </td>
 <td style="text-align:right;">
-79.34
+120.33
 </td>
 <td style="text-align:right;">
-109.21
+57.66
 </td>
 </tr>
 <tr>
@@ -363,10 +363,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-91.97
+117.84
 </td>
 <td style="text-align:right;">
-70.52
+110.32
 </td>
 </tr>
 <tr>
@@ -374,10 +374,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-99.40
+83.94
 </td>
 <td style="text-align:right;">
-66.83
+99.52
 </td>
 </tr>
 <tr>
@@ -385,10 +385,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-69.22
+89.12
 </td>
 <td style="text-align:right;">
-117.42
+111.79
 </td>
 </tr>
 <tr>
@@ -396,10 +396,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-107.92
+108.38
 </td>
 <td style="text-align:right;">
-133.07
+105.56
 </td>
 </tr>
 <tr>
@@ -407,10 +407,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-110.49
+55.86
 </td>
 <td style="text-align:right;">
-102.46
+91.80
 </td>
 </tr>
 <tr>
@@ -418,10 +418,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-89.03
+99.71
 </td>
 <td style="text-align:right;">
-90.94
+107.56
 </td>
 </tr>
 <tr>
@@ -432,7 +432,7 @@ M
 NA
 </td>
 <td style="text-align:right;">
-107.52
+91.16
 </td>
 </tr>
 <tr>
@@ -443,7 +443,7 @@ N
 NA
 </td>
 <td style="text-align:right;">
-126.97
+80.96
 </td>
 </tr>
 <tr>
@@ -454,7 +454,7 @@ O
 NA
 </td>
 <td style="text-align:right;">
-112.01
+110.70
 </td>
 </tr>
 <tr>
@@ -465,7 +465,7 @@ P
 NA
 </td>
 <td style="text-align:right;">
-112.96
+75.56
 </td>
 </tr>
 <tr>
@@ -476,7 +476,7 @@ Q
 NA
 </td>
 <td style="text-align:right;">
-99.29
+98.98
 </td>
 </tr>
 </tbody>

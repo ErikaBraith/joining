@@ -66,51 +66,51 @@ kable(list(day1, day2), 'html') %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 93.01 </td>
+   <td style="text-align:right;"> 78.35 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 82.54 </td>
+   <td style="text-align:right;"> 119.29 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
-   <td style="text-align:right;"> 74.53 </td>
+   <td style="text-align:right;"> 110.72 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> D </td>
-   <td style="text-align:right;"> 114.50 </td>
+   <td style="text-align:right;"> 93.33 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 74.33 </td>
+   <td style="text-align:right;"> 110.90 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 87.11 </td>
+   <td style="text-align:right;"> 78.89 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> G </td>
-   <td style="text-align:right;"> 81.42 </td>
+   <td style="text-align:right;"> 102.11 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 107.71 </td>
+   <td style="text-align:right;"> 83.29 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 113.88 </td>
+   <td style="text-align:right;"> 97.50 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> J </td>
-   <td style="text-align:right;"> 113.76 </td>
+   <td style="text-align:right;"> 110.44 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> K </td>
-   <td style="text-align:right;"> 110.13 </td>
+   <td style="text-align:right;"> 117.00 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 107.80 </td>
+   <td style="text-align:right;"> 109.13 </td>
   </tr>
 </tbody>
 </table>
@@ -128,51 +128,51 @@ kable(list(day1, day2), 'html') %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 106.06 </td>
+   <td style="text-align:right;"> 136.21 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> G </td>
-   <td style="text-align:right;"> 92.50 </td>
+   <td style="text-align:right;"> 80.07 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 91.12 </td>
+   <td style="text-align:right;"> 86.52 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 99.29 </td>
+   <td style="text-align:right;"> 85.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> J </td>
-   <td style="text-align:right;"> 115.30 </td>
+   <td style="text-align:right;"> 92.39 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> K </td>
-   <td style="text-align:right;"> 90.55 </td>
+   <td style="text-align:right;"> 103.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 84.07 </td>
+   <td style="text-align:right;"> 89.24 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 49.12 </td>
+   <td style="text-align:right;"> 78.03 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 137.48 </td>
+   <td style="text-align:right;"> 98.81 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> O </td>
-   <td style="text-align:right;"> 94.60 </td>
+   <td style="text-align:right;"> 108.36 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> P </td>
-   <td style="text-align:right;"> 123.68 </td>
+   <td style="text-align:right;"> 100.38 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Q </td>
-   <td style="text-align:right;"> 100.25 </td>
+   <td style="text-align:right;"> 109.75 </td>
   </tr>
 </tbody>
 </table>
@@ -227,63 +227,63 @@ anti = anti_join(day1, day2, by = 'ID')
 <tbody>
   <tr>
    <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 87.11 </td>
-   <td style="text-align:right;"> 106.06 </td>
+   <td style="text-align:right;"> 78.89 </td>
+   <td style="text-align:right;"> 136.21 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> G </td>
-   <td style="text-align:right;"> 81.42 </td>
-   <td style="text-align:right;"> 92.50 </td>
+   <td style="text-align:right;"> 102.11 </td>
+   <td style="text-align:right;"> 80.07 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 107.71 </td>
-   <td style="text-align:right;"> 91.12 </td>
+   <td style="text-align:right;"> 83.29 </td>
+   <td style="text-align:right;"> 86.52 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 113.88 </td>
-   <td style="text-align:right;"> 99.29 </td>
+   <td style="text-align:right;"> 97.50 </td>
+   <td style="text-align:right;"> 85.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> J </td>
-   <td style="text-align:right;"> 113.76 </td>
-   <td style="text-align:right;"> 115.30 </td>
+   <td style="text-align:right;"> 110.44 </td>
+   <td style="text-align:right;"> 92.39 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> K </td>
-   <td style="text-align:right;"> 110.13 </td>
-   <td style="text-align:right;"> 90.55 </td>
+   <td style="text-align:right;"> 117.00 </td>
+   <td style="text-align:right;"> 103.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 107.80 </td>
-   <td style="text-align:right;"> 84.07 </td>
+   <td style="text-align:right;"> 109.13 </td>
+   <td style="text-align:right;"> 89.24 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> M </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 49.12 </td>
+   <td style="text-align:right;"> 78.03 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> N </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 137.48 </td>
+   <td style="text-align:right;"> 98.81 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> O </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 94.60 </td>
+   <td style="text-align:right;"> 108.36 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> P </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 123.68 </td>
+   <td style="text-align:right;"> 100.38 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Q </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 100.25 </td>
+   <td style="text-align:right;"> 109.75 </td>
   </tr>
 </tbody>
 </table>
