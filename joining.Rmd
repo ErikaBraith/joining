@@ -1,14 +1,11 @@
 ---
 title: "Joining data frames in R using dplyr"
-author: "Erika Braithwaite & Kathryn Morrison""
+author: "Erika Braithwaite & Kathryn Morrison"
 date: "March 15, 2018"
 output:
-  slidy_presentation:
-    fig_height: 6
-    fig_width: 9
-  class: small-code
-  beamer_presentation: default
+  slidy_presentation: default
   ioslides_presentation: default
+  beamer_presentation: default
 subtitle: RLadies Montreal
 ---
 
@@ -20,7 +17,7 @@ We often run into scenarios where we need to join two data frames together. Let'
 Set up
 ```{r}
 #install.packages('pacman')
-pacman::p_load(knitr, kableExtra, formattable, data.table, dplyr, 
+pacman::p_load(knitr, kableExtra, data.table, dplyr, 
                rmarkdown, magrittr, xtable)
 ```
 
@@ -44,20 +41,22 @@ Let's explore the three(ish) types of joins in `dplyr`
 # Mutating joins  
 #####  Add a new variables to one table from matching rows in another
 
-* `left_join`: Primary key is left data frame
-* `right_join`: Primary key is right data frame
-* `inner_join`: Retains rows in both data frame
-* `full_join`: Retains all rows
+The order in which we specify the data frames in the `join` function determines which is considered primary (left) versus secondary (right)
 
-Left, right and full joins are considered outer joins because when a row doesn't match in an outer new, the new variables are filled with missing values 
+* `left_join`:  retains rows in first data frame specified if it has a match in the secondary
+* `right_join`: retains rows in the secondary data frame specified if it has a match in the primary (equivalent to `left_join` if you invert order of data frames)
+* `inner_join`: retains rows present in both data frame  
+* `full_join`: retains all rows in either data frames
+
+Left, right and full joins are considered outer joins because when a row doesn't match, the columns are filled with `NA` instead of being dropped by the `join`. Furthermore, multiple matches on the key will result in all combinations being returned.  
 
 # Filtering joins 
 #####  Filter observations from the primary based on whether they are present in the secondary table
 
-* `semi_join`: retains rows in the primary table that are also present in secondary table
-* `anti_join`: retains rows in the primary that are not present in the secondary table
+* `semi_join`: retains rows in the primary table that have a match in secondary table
+* `anti_join`: drops rows in the primary table that have a match in secondary table
 
-Filtering joins almost act like a filter in that the number of rows can change, but not the columns 
+Filtering joins act as a filter in that they change the number of rows but not the columns. Unlike mutating joins, rows are never duplicated (as in the case of an inner join). Only columns from the primary data frame are retained.  
 
 # Set operations 
 ##### Combines operations in the dataset as if they were set elements. Much like filtering joins, they do not add new columns. Set operations use combinations of observations from both data frames to create a new data frame  
@@ -75,7 +74,7 @@ right_join(x, y, by = NULL, copy = FALSE, suffix = c('.x', '.y'), ...)
 
 * `y` and `y` are the two data frames we are joining 
 * `by` = primary key variable (typically a unique identifier) which can be one or several columns. The foreign key is the indentifier in the secondary table, which will be matched to the primary tables based on the primary key.
-* `copy` = copy values of 
+* `copy` = copy values of secondary to the primary
 * `suffix` will add a suffix to columns when they have the same name, e.g. `x.IQ` and `y.IQ`.
 
 # Mutating joins: left join 
@@ -190,9 +189,11 @@ The consequences can vary, but dplyr might
 
 
 
-There are additional types of joins not covered here: rolling joins, scaling joins
+There are additional types of joins not covered here such as rolling joins or cross joins
 
 Rolling joins are used in circumstances where you want to join observations based on logical arguments (i.e. range of date). 
+
+Cross joins are used when we do not have a key on which we wish we match, rather we are simply returns every single combination of rows between two data frames. 
 
 If you want to join 3 or more tables, go check out how a `list` and `reduce` from `base R` or `purrr::reduce` can help you.
 

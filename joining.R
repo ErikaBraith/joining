@@ -3,7 +3,7 @@
 install.packages('pacman')
 library(pacman)
 
-pacman::p_load(data.table, dplyr, tinytex, knitr)
+pacman::p_load(data.table, dplyr, tinytex, knitr, xtable)
 
 # Scenario 1 
 day1 =  data.table(ID=LETTERS[1:12],
@@ -24,6 +24,9 @@ anti = anti_join(day1, day2, by = 'ID')
 inter = dplyr::intersect(day1, day2, by = 'ID')
 united = union(day1, day2, by = 'ID')
 setdif = setdiff(day1, day2, by = 'ID')
+
+xtable(day1)
+mutate.list
        
 left
 right
@@ -37,6 +40,20 @@ setdif
 
 inter2 = dplyr::intersect(day1, day2)
 inter2
+
+left_join(day1, day2, by = 'ID') %>% 
+        kable('html') %>% 
+        kable_styling(full_width = F, font_size = 20)
+
+
+kable(day1, format = "latex", booktabs = T, 
+      caption = "list of data frames") %>%
+        kable_styling(full_width = T) %>%
+        column_spec(1, width = "5cm")
+
+kable(day1, format = "latex", booktabs = T) %>%
+        kable_styling(full_width = T) %>%
+        column_spec(1, width = "5cm")
 
 
 
