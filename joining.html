@@ -94,7 +94,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 </tr>
 <tr>
@@ -110,7 +110,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 </tr>
 <tr>
@@ -134,7 +134,7 @@ E
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 </tr>
 <tr>
@@ -158,7 +158,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 </tr>
 <tr>
@@ -166,7 +166,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 </tr>
 <tr>
@@ -174,7 +174,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 </tr>
 <tr>
@@ -182,7 +182,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 </tr>
 </tbody>
@@ -206,7 +206,7 @@ IQ
 F
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -214,7 +214,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -222,7 +222,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -254,7 +254,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 <tr>
@@ -262,7 +262,7 @@ L
 M
 </td>
 <td style="text-align:right;">
-125.00
+126.75
 </td>
 </tr>
 <tr>
@@ -270,7 +270,7 @@ M
 N
 </td>
 <td style="text-align:right;">
-105.96
+78.14
 </td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@ N
 O
 </td>
 <td style="text-align:right;">
-128.34
+113.12
 </td>
 </tr>
 <tr>
@@ -286,7 +286,7 @@ O
 P
 </td>
 <td style="text-align:right;">
-97.14
+105.75
 </td>
 </tr>
 <tr>
@@ -294,7 +294,7 @@ P
 Q
 </td>
 <td style="text-align:right;">
-101.33
+114.90
 </td>
 </tr>
 </tbody>
@@ -312,7 +312,7 @@ Q
 <ul>
 <li><code>left_join</code>: retains rows in first data frame specified if it has a match in the secondary</li>
 <li><code>right_join</code>: retains rows in the secondary data frame specified if it has a match in the primary (equivalent to <code>left_join</code> if you invert order of data frames)</li>
-<li><code>inner_join</code>: retains rows present in both data frame<br />
+<li><code>inner_join</code>: retains rows present in both data frame where the keys match<br />
 </li>
 <li><code>full_join</code>: retains all rows in either data frames</li>
 </ul>
@@ -332,7 +332,7 @@ Q
 <h5 id="combines-operations-in-the-dataset-as-if-they-were-set-elements.-much-like-filtering-joins-they-do-not-add-new-columns.-set-operations-use-combinations-of-observations-from-both-data-frames-to-create-a-new-data-frame">Combines operations in the dataset as if they were set elements. Much like filtering joins, they do not add new columns. Set operations use combinations of observations from both data frames to create a new data frame</h5>
 <ul>
 <li><code>intersect</code>: retains rows ONLY if they appear in both data frames</li>
-<li><code>union</code>: retains rows that appear in EITHER data frames</li>
+<li><code>union</code>: retains rows that appear in EITHER data frames, but only retains one copy</li>
 <li><code>setdiff</code>: retains rows that ONLY appear in the primary data frame but not the second</li>
 </ul>
 </div>
@@ -342,12 +342,12 @@ Q
 <ul>
 <li><code>y</code> and <code>y</code> are the two data frames we are joining</li>
 <li><code>by</code> = primary key variable (typically a unique identifier) which can be one or several columns. The foreign key is the indentifier in the secondary table, which will be matched to the primary tables based on the primary key.</li>
-<li><code>copy</code> = copy values of secondary to the primary</li>
+<li><code>copy</code> = copy values of secondary data frame to the primary</li>
 <li><code>suffix</code> will add a suffix to columns when they have the same name, e.g. <code>x.IQ</code> and <code>y.IQ</code>.</li>
 </ul>
 </div>
-<div id="mutating-joins-left-join" class="slide section level1">
-<h1>Mutating joins: left join</h1>
+<div id="mutating-joins-left-join-n-12-rows" class="slide section level1">
+<h1>Mutating joins: left join N = 12 rows</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -371,7 +371,7 @@ IQ.y
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 <td style="text-align:right;">
 NA
@@ -382,7 +382,7 @@ NA
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 <td style="text-align:right;">
 NA
@@ -393,7 +393,7 @@ NA
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 <td style="text-align:right;">
 NA
@@ -404,7 +404,7 @@ NA
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 <td style="text-align:right;">
 NA
@@ -415,7 +415,7 @@ NA
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 <td style="text-align:right;">
 NA
@@ -426,10 +426,10 @@ NA
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -437,10 +437,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -448,10 +448,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -459,10 +459,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -470,10 +470,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -481,10 +481,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -492,17 +492,17 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="mutating-joins-right-join" class="slide section level1">
-<h1>Mutating joins: right join</h1>
+<div id="mutating-joins-right-join-n-12" class="slide section level1">
+<h1>Mutating joins: right join N = 12</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">right_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -526,10 +526,10 @@ IQ.y
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -537,10 +537,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -548,10 +548,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -559,10 +559,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -570,10 +570,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -581,10 +581,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -592,10 +592,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 <tr>
@@ -606,7 +606,7 @@ M
 NA
 </td>
 <td style="text-align:right;">
-125.00
+126.75
 </td>
 </tr>
 <tr>
@@ -617,7 +617,7 @@ N
 NA
 </td>
 <td style="text-align:right;">
-105.96
+78.14
 </td>
 </tr>
 <tr>
@@ -628,7 +628,7 @@ O
 NA
 </td>
 <td style="text-align:right;">
-128.34
+113.12
 </td>
 </tr>
 <tr>
@@ -639,7 +639,7 @@ P
 NA
 </td>
 <td style="text-align:right;">
-97.14
+105.75
 </td>
 </tr>
 <tr>
@@ -650,14 +650,14 @@ Q
 NA
 </td>
 <td style="text-align:right;">
-101.33
+114.90
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="mutating-joins-inner-join" class="slide section level1">
-<h1>Mutating joins: inner join</h1>
+<div id="mutating-joins-inner-join-n-7" class="slide section level1">
+<h1>Mutating joins: inner join N = 7</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -681,10 +681,10 @@ IQ.y
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -692,10 +692,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -703,10 +703,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -714,10 +714,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -725,10 +725,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -736,10 +736,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -747,17 +747,17 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="mutating-joins-full-join" class="slide section level1">
-<h1>Mutating joins: full join</h1>
+<div id="mutating-joins-full-join-n-17" class="slide section level1">
+<h1>Mutating joins: full join N = 17</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>, <span class="dt">booktabs =</span> T) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -781,7 +781,7 @@ IQ.y
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 <td style="text-align:right;">
 NA
@@ -792,7 +792,7 @@ NA
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 <td style="text-align:right;">
 NA
@@ -803,7 +803,7 @@ NA
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 <td style="text-align:right;">
 NA
@@ -814,7 +814,7 @@ NA
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 <td style="text-align:right;">
 NA
@@ -825,7 +825,7 @@ NA
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 <td style="text-align:right;">
 NA
@@ -836,10 +836,10 @@ NA
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -847,10 +847,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -858,10 +858,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -869,10 +869,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -880,10 +880,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -891,10 +891,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -902,10 +902,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 <tr>
@@ -916,7 +916,7 @@ M
 NA
 </td>
 <td style="text-align:right;">
-125.00
+126.75
 </td>
 </tr>
 <tr>
@@ -927,7 +927,7 @@ N
 NA
 </td>
 <td style="text-align:right;">
-105.96
+78.14
 </td>
 </tr>
 <tr>
@@ -938,7 +938,7 @@ O
 NA
 </td>
 <td style="text-align:right;">
-128.34
+113.12
 </td>
 </tr>
 <tr>
@@ -949,7 +949,7 @@ P
 NA
 </td>
 <td style="text-align:right;">
-97.14
+105.75
 </td>
 </tr>
 <tr>
@@ -960,14 +960,14 @@ Q
 NA
 </td>
 <td style="text-align:right;">
-101.33
+114.90
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="filtering-joins-semi-join" class="slide section level1">
-<h1>Filtering joins: semi join</h1>
+<div id="filtering-joins-semi-join-n-7" class="slide section level1">
+<h1>Filtering joins: semi join N = 7</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -988,7 +988,7 @@ IQ
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 </tr>
 <tr>
@@ -996,7 +996,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 </tr>
 <tr>
@@ -1004,7 +1004,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 </tr>
 <tr>
@@ -1012,7 +1012,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 </tr>
 <tr>
@@ -1020,7 +1020,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 </tr>
 <tr>
@@ -1028,7 +1028,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 </tr>
 <tr>
@@ -1036,14 +1036,14 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="filtering-joins-anti-join" class="slide section level1">
-<h1>Filtering joins: anti join</h1>
+<div id="filtering-joins-anti-join-n-5" class="slide section level1">
+<h1>Filtering joins: anti join N = 5</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -1064,7 +1064,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 </tr>
 <tr>
@@ -1072,7 +1072,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 </tr>
 <tr>
@@ -1080,7 +1080,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 </tr>
 <tr>
@@ -1088,7 +1088,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 </tr>
 <tr>
@@ -1096,14 +1096,14 @@ D
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="set-operations-intersect" class="slide section level1">
-<h1>Set operations: intersect</h1>
+<div id="set-operations-intersect-n-0" class="slide section level1">
+<h1>Set operations: intersect N = 0</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">intersect</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -1124,8 +1124,8 @@ IQ
 </tbody>
 </table>
 </div>
-<div id="set-operations-union" class="slide section level1">
-<h1>Set operations: union</h1>
+<div id="set-operations-union-n-24" class="slide section level1">
+<h1>Set operations: union N = 24</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">union</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">'html'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -1146,7 +1146,7 @@ IQ
 Q
 </td>
 <td style="text-align:right;">
-101.33
+114.90
 </td>
 </tr>
 <tr>
@@ -1154,7 +1154,7 @@ Q
 P
 </td>
 <td style="text-align:right;">
-97.14
+105.75
 </td>
 </tr>
 <tr>
@@ -1162,7 +1162,7 @@ P
 O
 </td>
 <td style="text-align:right;">
-128.34
+113.12
 </td>
 </tr>
 <tr>
@@ -1170,7 +1170,7 @@ O
 N
 </td>
 <td style="text-align:right;">
-105.96
+78.14
 </td>
 </tr>
 <tr>
@@ -1178,7 +1178,7 @@ N
 M
 </td>
 <td style="text-align:right;">
-125.00
+126.75
 </td>
 </tr>
 <tr>
@@ -1186,7 +1186,7 @@ M
 L
 </td>
 <td style="text-align:right;">
-96.83
+108.78
 </td>
 </tr>
 <tr>
@@ -1194,7 +1194,7 @@ L
 K
 </td>
 <td style="text-align:right;">
-69.20
+66.57
 </td>
 </tr>
 <tr>
@@ -1202,7 +1202,7 @@ K
 J
 </td>
 <td style="text-align:right;">
-97.63
+114.75
 </td>
 </tr>
 <tr>
@@ -1210,7 +1210,7 @@ J
 I
 </td>
 <td style="text-align:right;">
-129.57
+61.74
 </td>
 </tr>
 <tr>
@@ -1218,7 +1218,7 @@ I
 H
 </td>
 <td style="text-align:right;">
-119.41
+94.26
 </td>
 </tr>
 <tr>
@@ -1226,7 +1226,7 @@ H
 G
 </td>
 <td style="text-align:right;">
-117.99
+80.63
 </td>
 </tr>
 <tr>
@@ -1234,7 +1234,7 @@ G
 F
 </td>
 <td style="text-align:right;">
-79.66
+106.92
 </td>
 </tr>
 <tr>
@@ -1242,7 +1242,7 @@ F
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 </tr>
 <tr>
@@ -1250,23 +1250,7 @@ L
 K
 </td>
 <td style="text-align:right;">
-115.10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-H
-</td>
-<td style="text-align:right;">
-92.16
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-G
-</td>
-<td style="text-align:right;">
-109.86
+115.53
 </td>
 </tr>
 <tr>
@@ -1274,7 +1258,7 @@ G
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 </tr>
 <tr>
@@ -1282,7 +1266,23 @@ J
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:right;">
+102.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:right;">
+119.88
 </td>
 </tr>
 <tr>
@@ -1290,7 +1290,7 @@ I
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 </tr>
 <tr>
@@ -1298,7 +1298,7 @@ F
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 </tr>
 <tr>
@@ -1306,7 +1306,7 @@ E
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 </tr>
 <tr>
@@ -1314,7 +1314,7 @@ D
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 </tr>
 <tr>
@@ -1322,7 +1322,7 @@ C
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 </tr>
 <tr>
@@ -1330,14 +1330,14 @@ B
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="set-operations-setdiff" class="slide section level1">
-<h1>Set operations: setdiff</h1>
+<div id="set-operations-setdiff-n-12" class="slide section level1">
+<h1>Set operations: setdiff N = 12</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setdiff</span>(day1, day2, <span class="dt">by =</span> <span class="st">'ID'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">kable_styling</span>(<span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre></div>
@@ -1358,7 +1358,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-107.52
+92.76
 </td>
 </tr>
 <tr>
@@ -1366,7 +1366,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-113.33
+85.34
 </td>
 </tr>
 <tr>
@@ -1374,7 +1374,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-104.46
+107.84
 </td>
 </tr>
 <tr>
@@ -1382,7 +1382,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-139.35
+106.29
 </td>
 </tr>
 <tr>
@@ -1390,7 +1390,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-84.89
+125.30
 </td>
 </tr>
 <tr>
@@ -1398,7 +1398,7 @@ E
 F
 </td>
 <td style="text-align:right;">
-88.23
+103.38
 </td>
 </tr>
 <tr>
@@ -1406,7 +1406,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-109.86
+119.88
 </td>
 </tr>
 <tr>
@@ -1414,7 +1414,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-92.16
+102.82
 </td>
 </tr>
 <tr>
@@ -1422,7 +1422,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-111.46
+94.46
 </td>
 </tr>
 <tr>
@@ -1430,7 +1430,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-122.44
+110.85
 </td>
 </tr>
 <tr>
@@ -1438,7 +1438,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.10
+115.53
 </td>
 </tr>
 <tr>
@@ -1446,7 +1446,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-128.35
+84.19
 </td>
 </tr>
 </tbody>

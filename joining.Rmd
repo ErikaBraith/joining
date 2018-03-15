@@ -27,7 +27,7 @@ day1 =  data.table(ID=LETTERS[1:12], IQ=round(rnorm(12, 100, 15),2))
 
 day2 =  data.table(ID=LETTERS[6:17],IQ=round(rnorm(12, 100, 20),2))
 ```
-There are 12 individuals on day 1 and 12 individuals on day 2. 17 people have a single measurement while 5 have 2 measurements
+There are 12 individuals on day 1 and 12 individuals on day 2. 10 people have a single measurement while 7 have 2 measurements
 
 # Our data   
 
@@ -45,7 +45,7 @@ The order in which we specify the data frames in the `join` function determines 
 
 * `left_join`:  retains rows in first data frame specified if it has a match in the secondary
 * `right_join`: retains rows in the secondary data frame specified if it has a match in the primary (equivalent to `left_join` if you invert order of data frames)
-* `inner_join`: retains rows present in both data frame  
+* `inner_join`: retains rows present in both data frame where the keys match  
 * `full_join`: retains all rows in either data frames
 
 Left, right and full joins are considered outer joins because when a row doesn't match, the columns are filled with `NA` instead of being dropped by the `join`. Furthermore, multiple matches on the key will result in all combinations being returned.  
@@ -62,7 +62,7 @@ Filtering joins act as a filter in that they change the number of rows but not t
 ##### Combines operations in the dataset as if they were set elements. Much like filtering joins, they do not add new columns. Set operations use combinations of observations from both data frames to create a new data frame  
 
 * `intersect`: retains rows ONLY if they appear in both data frames
-* `union`: retains rows that appear in EITHER data frames
+* `union`: retains rows that appear in EITHER data frames, but only retains one copy
 * `setdiff`: retains rows that ONLY appear in the primary data frame but not the second
 
 
@@ -74,10 +74,10 @@ right_join(x, y, by = NULL, copy = FALSE, suffix = c('.x', '.y'), ...)
 
 * `y` and `y` are the two data frames we are joining 
 * `by` = primary key variable (typically a unique identifier) which can be one or several columns. The foreign key is the indentifier in the secondary table, which will be matched to the primary tables based on the primary key.
-* `copy` = copy values of secondary to the primary
+* `copy` = copy values of secondary data frame to the primary
 * `suffix` will add a suffix to columns when they have the same name, e.g. `x.IQ` and `y.IQ`.
 
-# Mutating joins: left join 
+# Mutating joins: left join N = 12 rows
 
 ```{r}
 left_join(day1, day2, by = 'ID') %>% 
@@ -86,14 +86,14 @@ left_join(day1, day2, by = 'ID') %>%
 ```
 
 
-# Mutating joins: right join 
+# Mutating joins: right join N = 12
 ```{r}
 right_join(day1, day2, by = 'ID') %>% 
         kable('html') %>% 
         kable_styling(font_size = 20)
 ```
 
-# Mutating joins: inner join 
+# Mutating joins: inner join N = 7
 
 ```{r}
 inner_join(day1, day2, by = 'ID') %>% 
@@ -102,7 +102,7 @@ inner_join(day1, day2, by = 'ID') %>%
 ```
 
 
-# Mutating joins: full join
+# Mutating joins: full join N = 17
 ```{r}
 full_join(day1, day2, by = 'ID', booktabs = T) %>% 
         kable('html') %>% 
@@ -110,7 +110,7 @@ full_join(day1, day2, by = 'ID', booktabs = T) %>%
 ```
 
 
-# Filtering joins: semi join 
+# Filtering joins: semi join N = 7
 
 ```{r}
 semi_join(day1, day2, by = 'ID') %>% 
@@ -118,7 +118,7 @@ semi_join(day1, day2, by = 'ID') %>%
         kable_styling(font_size = 20)
 ```
 
-# Filtering joins: anti join 
+# Filtering joins: anti join N = 5
 
 ```{r}
 anti_join(day1, day2, by = 'ID') %>% 
@@ -127,7 +127,7 @@ anti_join(day1, day2, by = 'ID') %>%
 ```
 
 
-# Set operations: intersect 
+# Set operations: intersect N = 0
 
 ```{r}
 intersect(day1, day2, by = 'ID') %>% 
@@ -135,7 +135,7 @@ intersect(day1, day2, by = 'ID') %>%
         kable_styling(font_size = 20)
 ```
 
-# Set operations: union
+# Set operations: union N = 24
 
 ```{r}
 union(day1, day2, by = 'ID') %>% 
@@ -143,7 +143,7 @@ union(day1, day2, by = 'ID') %>%
         kable_styling(font_size = 20)
 ```
 
-# Set operations: setdiff
+# Set operations: setdiff N = 12
 
 ```{r}
 setdiff(day1, day2, by = 'ID') %>% 
