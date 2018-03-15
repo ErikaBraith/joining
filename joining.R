@@ -41,19 +41,7 @@ setdif
 inter2 = dplyr::intersect(day1, day2)
 inter2
 
-left_join(day1, day2, by = 'ID') %>% 
-        kable('html') %>% 
-        kable_styling(full_width = F, font_size = 20)
 
-
-kable(day1, format = "latex", booktabs = T, 
-      caption = "list of data frames") %>%
-        kable_styling(full_width = T) %>%
-        column_spec(1, width = "5cm")
-
-kable(day1, format = "latex", booktabs = T) %>%
-        kable_styling(full_width = T) %>%
-        column_spec(1, width = "5cm")
 
 
 

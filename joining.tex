@@ -28,7 +28,7 @@
 \newif\ifbibliography
 \hypersetup{
             pdftitle={Joining data frames in R using dplyr},
-            pdfauthor={Erika Braithwaite, PhD},
+            pdfauthor={Erika Braithwaite \& Kathryn Morrison},
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
@@ -114,7 +114,7 @@
 
 \title{Joining data frames in R using dplyr}
 \subtitle{RLadies Montreal}
-\author{Erika Braithwaite, PhD}
+\author{Erika Braithwaite \& Kathryn Morrison}
 \date{March 15, 2018}
 
 \begin{document}
@@ -132,7 +132,7 @@ Set up
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#install.packages('pacman')}
-\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(knitr, kableExtra, formattable, data.table, dplyr, }
+\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(knitr, kableExtra, data.table, dplyr, }
 \NormalTok{               rmarkdown, magrittr, xtable)}
 \end{Highlighting}
 \end{Shaded}
@@ -160,51 +160,51 @@ IQ
 
 A
 
-92.75
+119.24
 
 B
 
-96.33
+84.31
 
 C
 
-118.41
+109.48
 
 D
 
-110.60
+77.60
 
 E
 
-102.74
+88.19
 
 F
 
-103.95
+87.73
 
 G
 
-94.56
+88.26
 
 H
 
-77.81
+137.23
 
 I
 
-127.07
+81.17
 
 J
 
-106.77
+107.38
 
 K
 
-107.98
+104.48
 
 L
 
-130.19
+98.82
 
 ID
 
@@ -212,51 +212,51 @@ IQ
 
 F
 
-122.96
+89.01
 
 G
 
-140.90
+124.34
 
 H
 
-100.29
+103.09
 
 I
 
-128.33
+112.67
 
 J
 
-103.18
+116.86
 
 K
 
-93.63
+106.20
 
 L
 
-128.85
+74.36
 
 M
 
-85.09
+136.07
 
 N
 
-126.77
+108.39
 
 O
 
-143.69
+118.75
 
 P
 
-158.16
+121.31
 
 Q
 
-118.72
+89.64
 
 Let's explore the three(ish) types of joins in \texttt{dplyr}
 
@@ -267,21 +267,29 @@ Let's explore the three(ish) types of joins in \texttt{dplyr}
 \begin{block}{Add a new variables to one table from matching rows in
 another}
 
+The order in which we specify the data frames in the \texttt{join}
+function determines which is considered primary (left) versus secondary
+(right)
+
 \begin{itemize}
 \tightlist
 \item
-  \texttt{left\_join}: Primary key is left data frame
+  \texttt{left\_join}: retains rows in first data frame specified if it
+  has a match in the secondary
 \item
-  \texttt{right\_join}: Primary key is right data frame
+  \texttt{right\_join}: retains rows in the secondary data frame
+  specified if it has a match in the primary (equivalent to
+  \texttt{left\_join} if you invert order of data frames)
 \item
-  \texttt{inner\_join}: Retains rows in both data frame
+  \texttt{inner\_join}: retains rows present in both data frame\\
 \item
-  \texttt{full\_join}: Retains all rows
+  \texttt{full\_join}: retains all rows in either data frames
 \end{itemize}
 
 Left, right and full joins are considered outer joins because when a row
-doesn't match in an outer new, the new variables are filled with missing
-values
+doesn't match, the columns are filled with \texttt{NA} instead of being
+dropped by the \texttt{join}. Furthermore, multiple matches on the key
+will result in all combinations being returned.
 
 \end{block}
 
@@ -295,15 +303,17 @@ are present in the secondary table}
 \begin{itemize}
 \tightlist
 \item
-  \texttt{semi\_join}: retains rows in the primary table that are also
-  present in secondary table
+  \texttt{semi\_join}: retains rows in the primary table that have a
+  match in secondary table
 \item
-  \texttt{anti\_join}: retains rows in the primary that are not present
-  in the secondary table
+  \texttt{anti\_join}: drops rows in the primary table that have a match
+  in secondary table
 \end{itemize}
 
-Filtering joins almost act like a filter in that the number of rows can
-change, but not the columns
+Filtering joins act as a filter in that they change the number of rows
+but not the columns. Unlike mutating joins, rows are never duplicated
+(as in the case of an inner join). Only columns from the primary data
+frame are retained.
 
 \end{block}
 
@@ -350,7 +360,7 @@ create a new data frame}
   indentifier in the secondary table, which will be matched to the
   primary tables based on the primary key.
 \item
-  \texttt{copy} =
+  \texttt{copy} = copy values of secondary to the primary
 \item
   \texttt{suffix} will add a suffix to columns when they have the same
   name, e.g. \texttt{x.IQ} and \texttt{y.IQ}.
@@ -358,62 +368,641 @@ create a new data frame}
 
 \end{frame}
 
-\begin{frame}[fragile]{Mutating joins}
+\begin{frame}[fragile]{Mutating joins: left join}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{left =}\StringTok{ }\KeywordTok{left_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{right =}\StringTok{ }\KeywordTok{right_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{inner=}\StringTok{ }\KeywordTok{inner_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{full =}\StringTok{ }\KeywordTok{full_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\KeywordTok{left_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{graphs/mutate.png}
-\caption{}
-\end{figure}
+ID
+
+IQ.x
+
+IQ.y
+
+A
+
+119.24
+
+NA
+
+B
+
+84.31
+
+NA
+
+C
+
+109.48
+
+NA
+
+D
+
+77.60
+
+NA
+
+E
+
+88.19
+
+NA
+
+F
+
+87.73
+
+89.01
+
+G
+
+88.26
+
+124.34
+
+H
+
+137.23
+
+103.09
+
+I
+
+81.17
+
+112.67
+
+J
+
+107.38
+
+116.86
+
+K
+
+104.48
+
+106.20
+
+L
+
+98.82
+
+74.36
 
 \end{frame}
 
-\begin{frame}[fragile]{Filtering joins}
+\begin{frame}[fragile]{Mutating joins: right join}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{semi =}\StringTok{ }\KeywordTok{semi_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{anti =}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\KeywordTok{right_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{graphs/filter.png}
-\caption{}
-\end{figure}
+ID
+
+IQ.x
+
+IQ.y
+
+F
+
+87.73
+
+89.01
+
+G
+
+88.26
+
+124.34
+
+H
+
+137.23
+
+103.09
+
+I
+
+81.17
+
+112.67
+
+J
+
+107.38
+
+116.86
+
+K
+
+104.48
+
+106.20
+
+L
+
+98.82
+
+74.36
+
+M
+
+NA
+
+136.07
+
+N
+
+NA
+
+108.39
+
+O
+
+NA
+
+118.75
+
+P
+
+NA
+
+121.31
+
+Q
+
+NA
+
+89.64
 
 \end{frame}
 
-\begin{frame}[fragile]{Set operations}
+\begin{frame}[fragile]{Mutating joins: inner join}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{semi =}\StringTok{ }\KeywordTok{semi_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
-\NormalTok{anti =}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{)}
+\KeywordTok{inner_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{graphs/set.png}
-\caption{}
-\end{figure}
+ID
+
+IQ.x
+
+IQ.y
+
+F
+
+87.73
+
+89.01
+
+G
+
+88.26
+
+124.34
+
+H
+
+137.23
+
+103.09
+
+I
+
+81.17
+
+112.67
+
+J
+
+107.38
+
+116.86
+
+K
+
+104.48
+
+106.20
+
+L
+
+98.82
+
+74.36
+
+\end{frame}
+
+\begin{frame}[fragile]{Mutating joins: full join}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{full_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ.x
+
+IQ.y
+
+A
+
+119.24
+
+NA
+
+B
+
+84.31
+
+NA
+
+C
+
+109.48
+
+NA
+
+D
+
+77.60
+
+NA
+
+E
+
+88.19
+
+NA
+
+F
+
+87.73
+
+89.01
+
+G
+
+88.26
+
+124.34
+
+H
+
+137.23
+
+103.09
+
+I
+
+81.17
+
+112.67
+
+J
+
+107.38
+
+116.86
+
+K
+
+104.48
+
+106.20
+
+L
+
+98.82
+
+74.36
+
+M
+
+NA
+
+136.07
+
+N
+
+NA
+
+108.39
+
+O
+
+NA
+
+118.75
+
+P
+
+NA
+
+121.31
+
+Q
+
+NA
+
+89.64
+
+\end{frame}
+
+\begin{frame}[fragile]{Filtering joins: semi join}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{semi_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+F
+
+87.73
+
+G
+
+88.26
+
+H
+
+137.23
+
+I
+
+81.17
+
+J
+
+107.38
+
+K
+
+104.48
+
+L
+
+98.82
+
+\end{frame}
+
+\begin{frame}[fragile]{Filtering joins: anti join}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anti_join}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+A
+
+119.24
+
+B
+
+84.31
+
+C
+
+109.48
+
+D
+
+77.60
+
+E
+
+88.19
+
+\end{frame}
+
+\begin{frame}[fragile]{Set operations: intersect}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{intersect}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+\end{frame}
+
+\begin{frame}[fragile]{Set operations: union}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{union}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{'html'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+Q
+
+89.64
+
+P
+
+121.31
+
+O
+
+118.75
+
+N
+
+108.39
+
+M
+
+136.07
+
+L
+
+74.36
+
+J
+
+116.86
+
+K
+
+106.20
+
+I
+
+112.67
+
+H
+
+103.09
+
+G
+
+124.34
+
+F
+
+89.01
+
+L
+
+98.82
+
+K
+
+104.48
+
+J
+
+107.38
+
+I
+
+81.17
+
+H
+
+137.23
+
+G
+
+88.26
+
+F
+
+87.73
+
+E
+
+88.19
+
+D
+
+77.60
+
+C
+
+109.48
+
+B
+
+84.31
+
+A
+
+119.24
+
+\end{frame}
+
+\begin{frame}[fragile]{Set operations: setdiff}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setdiff}\NormalTok{(day1, day2, }\DataTypeTok{by =} \StringTok{'ID'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable}\NormalTok{(}\StringTok{"html"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ID
+
+IQ
+
+A
+
+119.24
+
+B
+
+84.31
+
+C
+
+109.48
+
+D
+
+77.60
+
+E
+
+88.19
+
+F
+
+87.73
+
+G
+
+88.26
+
+H
+
+137.23
+
+I
+
+81.17
+
+J
+
+107.38
+
+K
+
+104.48
+
+L
+
+98.82
 
 \end{frame}
 
 \begin{frame}[fragile]{dplyr versus \ldots{}}
 
-\begin{block}{Base R: \texttt{rbind}, and \texttt{cbind}}
+\begin{block}{Base R: \texttt{merge}}
 
 \begin{itemize}
 \tightlist
@@ -424,8 +1013,8 @@ create a new data frame}
 \item
   \texttt{rbind} returns an error when columns are not identical
 \item
-  \texttt{.id} arguments allows you to specify a name for each source
-  data frame
+  \texttt{dplyr}'s \texttt{.id} argument allows you to specify a name
+  for each source data frame
 \end{itemize}
 
 \end{block}
@@ -450,6 +1039,16 @@ more difficult to learn. Some people prefer \texttt{dplyr} because
 
 \end{frame}
 
+\begin{frame}{Benchmarking exercise}
+
+\begin{figure}
+\centering
+\includegraphics{graphs/benchmark.png}
+\caption{benchmark}
+\end{figure}
+
+\end{frame}
+
 \begin{frame}{When joining can get tricky\ldots{}}
 
 \begin{itemize}
@@ -469,7 +1068,7 @@ The consequences can vary, but dplyr might
 \item
   Set all the values to NA
 \item
-  Coerce a column to another type
+  Coerce a column to another type (e.g.~factor to character)
 \item
   Fail to recognize columns that match resulting in rows being dropped
 \end{itemize}
@@ -478,11 +1077,15 @@ The consequences can vary, but dplyr might
 
 \begin{frame}[fragile]{More!}
 
-There are additional types of joins not covered here: rolling joins,
-scaling joins
+There are additional types of joins not covered here such as rolling
+joins or cross joins
 
 Rolling joins are used in circumstances where you want to join
 observations based on logical arguments (i.e.~range of date).
+
+Cross joins are used when we do not have a key on which we wish we
+match, rather we are simply returns every single combination of rows
+between two data frames.
 
 If you want to join 3 or more tables, go check out how a \texttt{list}
 and \texttt{reduce} from \texttt{base\ R} or \texttt{purrr::reduce} can
