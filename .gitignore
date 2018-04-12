@@ -13,3 +13,7 @@
 # powerpoint
 *.pptx
 
+# RHistory file 
+*.Rhistory 
+
+

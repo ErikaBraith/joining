@@ -69,7 +69,7 @@ pacman<span class="op">::</span><span class="kw">p_load</span>(knitr, kableExtra
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>], <span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">15</span>),<span class="dv">2</span>))
 
 day2 =<span class="st">  </span><span class="kw">data.table</span>(<span class="dt">ID=</span>LETTERS[<span class="dv">6</span><span class="op">:</span><span class="dv">17</span>],<span class="dt">IQ=</span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dv">100</span>, <span class="dv">20</span>),<span class="dv">2</span>))</code></pre></div>
-<p>There are 12 individuals on day 1 and 12 individuals on day 2. 17 people have a single measurement while 5 have 2 measurements</p>
+<p>There are 12 individuals on day 1 and 12 individuals on day 2. 10 people have a single measurement while 7 have 2 measurements</p>
 </div>
 <div id="our-data" class="slide section level1">
 <h1>Our data</h1>
@@ -94,7 +94,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 </tr>
 <tr>
@@ -110,7 +110,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 </tr>
 <tr>
@@ -134,7 +134,7 @@ E
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 </tr>
 <tr>
@@ -158,7 +158,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 </tr>
 <tr>
@@ -166,7 +166,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 </tr>
 <tr>
@@ -174,7 +174,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 </tr>
 <tr>
@@ -182,7 +182,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 </tr>
 </tbody>
@@ -206,7 +206,7 @@ IQ
 F
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -214,7 +214,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -222,7 +222,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -254,7 +254,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 <tr>
@@ -262,7 +262,7 @@ L
 M
 </td>
 <td style="text-align:right;">
-126.75
+91.30
 </td>
 </tr>
 <tr>
@@ -270,7 +270,7 @@ M
 N
 </td>
 <td style="text-align:right;">
-78.14
+105.62
 </td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@ N
 O
 </td>
 <td style="text-align:right;">
-113.12
+113.96
 </td>
 </tr>
 <tr>
@@ -286,7 +286,7 @@ O
 P
 </td>
 <td style="text-align:right;">
-105.75
+102.30
 </td>
 </tr>
 <tr>
@@ -294,7 +294,7 @@ P
 Q
 </td>
 <td style="text-align:right;">
-114.90
+104.91
 </td>
 </tr>
 </tbody>
@@ -371,7 +371,7 @@ IQ.y
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 <td style="text-align:right;">
 NA
@@ -382,7 +382,7 @@ NA
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 <td style="text-align:right;">
 NA
@@ -393,7 +393,7 @@ NA
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 <td style="text-align:right;">
 NA
@@ -404,7 +404,7 @@ NA
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 <td style="text-align:right;">
 NA
@@ -415,7 +415,7 @@ NA
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 <td style="text-align:right;">
 NA
@@ -426,10 +426,10 @@ NA
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -437,10 +437,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -448,10 +448,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -459,10 +459,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -470,10 +470,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -481,10 +481,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -492,10 +492,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 </tbody>
@@ -526,10 +526,10 @@ IQ.y
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -537,10 +537,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -548,10 +548,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -559,10 +559,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -570,10 +570,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -581,10 +581,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -592,10 +592,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 <tr>
@@ -606,7 +606,7 @@ M
 NA
 </td>
 <td style="text-align:right;">
-126.75
+91.30
 </td>
 </tr>
 <tr>
@@ -617,7 +617,7 @@ N
 NA
 </td>
 <td style="text-align:right;">
-78.14
+105.62
 </td>
 </tr>
 <tr>
@@ -628,7 +628,7 @@ O
 NA
 </td>
 <td style="text-align:right;">
-113.12
+113.96
 </td>
 </tr>
 <tr>
@@ -639,7 +639,7 @@ P
 NA
 </td>
 <td style="text-align:right;">
-105.75
+102.30
 </td>
 </tr>
 <tr>
@@ -650,7 +650,7 @@ Q
 NA
 </td>
 <td style="text-align:right;">
-114.90
+104.91
 </td>
 </tr>
 </tbody>
@@ -681,10 +681,10 @@ IQ.y
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -692,10 +692,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -703,10 +703,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -714,10 +714,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -725,10 +725,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -736,10 +736,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -747,10 +747,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 </tbody>
@@ -781,7 +781,7 @@ IQ.y
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 <td style="text-align:right;">
 NA
@@ -792,7 +792,7 @@ NA
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 <td style="text-align:right;">
 NA
@@ -803,7 +803,7 @@ NA
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 <td style="text-align:right;">
 NA
@@ -814,7 +814,7 @@ NA
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 <td style="text-align:right;">
 NA
@@ -825,7 +825,7 @@ NA
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 <td style="text-align:right;">
 NA
@@ -836,10 +836,10 @@ NA
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -847,10 +847,10 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -858,10 +858,10 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -869,10 +869,10 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -880,10 +880,10 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -891,10 +891,10 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -902,10 +902,10 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 <tr>
@@ -916,7 +916,7 @@ M
 NA
 </td>
 <td style="text-align:right;">
-126.75
+91.30
 </td>
 </tr>
 <tr>
@@ -927,7 +927,7 @@ N
 NA
 </td>
 <td style="text-align:right;">
-78.14
+105.62
 </td>
 </tr>
 <tr>
@@ -938,7 +938,7 @@ O
 NA
 </td>
 <td style="text-align:right;">
-113.12
+113.96
 </td>
 </tr>
 <tr>
@@ -949,7 +949,7 @@ P
 NA
 </td>
 <td style="text-align:right;">
-105.75
+102.30
 </td>
 </tr>
 <tr>
@@ -960,7 +960,7 @@ Q
 NA
 </td>
 <td style="text-align:right;">
-114.90
+104.91
 </td>
 </tr>
 </tbody>
@@ -988,7 +988,7 @@ IQ
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 </tr>
 <tr>
@@ -996,7 +996,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 </tr>
 <tr>
@@ -1004,7 +1004,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 </tr>
 <tr>
@@ -1012,7 +1012,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 </tr>
 <tr>
@@ -1020,7 +1020,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 </tr>
 <tr>
@@ -1028,7 +1028,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 </tr>
 <tr>
@@ -1036,7 +1036,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 </tr>
 </tbody>
@@ -1064,7 +1064,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 </tr>
 <tr>
@@ -1072,7 +1072,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 </tr>
 <tr>
@@ -1080,7 +1080,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 </tr>
 <tr>
@@ -1088,7 +1088,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 </tr>
 <tr>
@@ -1096,7 +1096,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 </tr>
 </tbody>
@@ -1146,7 +1146,7 @@ IQ
 Q
 </td>
 <td style="text-align:right;">
-114.90
+104.91
 </td>
 </tr>
 <tr>
@@ -1154,7 +1154,7 @@ Q
 P
 </td>
 <td style="text-align:right;">
-105.75
+102.30
 </td>
 </tr>
 <tr>
@@ -1162,7 +1162,7 @@ P
 O
 </td>
 <td style="text-align:right;">
-113.12
+113.96
 </td>
 </tr>
 <tr>
@@ -1170,7 +1170,7 @@ O
 N
 </td>
 <td style="text-align:right;">
-78.14
+105.62
 </td>
 </tr>
 <tr>
@@ -1178,7 +1178,7 @@ N
 M
 </td>
 <td style="text-align:right;">
-126.75
+91.30
 </td>
 </tr>
 <tr>
@@ -1186,7 +1186,7 @@ M
 L
 </td>
 <td style="text-align:right;">
-108.78
+153.61
 </td>
 </tr>
 <tr>
@@ -1194,7 +1194,7 @@ L
 K
 </td>
 <td style="text-align:right;">
-66.57
+79.91
 </td>
 </tr>
 <tr>
@@ -1202,7 +1202,7 @@ K
 J
 </td>
 <td style="text-align:right;">
-114.75
+77.19
 </td>
 </tr>
 <tr>
@@ -1210,7 +1210,7 @@ J
 I
 </td>
 <td style="text-align:right;">
-61.74
+52.21
 </td>
 </tr>
 <tr>
@@ -1218,7 +1218,7 @@ I
 H
 </td>
 <td style="text-align:right;">
-94.26
+122.84
 </td>
 </tr>
 <tr>
@@ -1226,7 +1226,7 @@ H
 G
 </td>
 <td style="text-align:right;">
-80.63
+111.31
 </td>
 </tr>
 <tr>
@@ -1234,7 +1234,7 @@ G
 F
 </td>
 <td style="text-align:right;">
-106.92
+106.79
 </td>
 </tr>
 <tr>
@@ -1242,7 +1242,7 @@ F
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 </tr>
 <tr>
@@ -1250,7 +1250,7 @@ L
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 </tr>
 <tr>
@@ -1258,7 +1258,7 @@ K
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 </tr>
 <tr>
@@ -1266,7 +1266,7 @@ J
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 </tr>
 <tr>
@@ -1274,7 +1274,7 @@ I
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 </tr>
 <tr>
@@ -1282,7 +1282,7 @@ H
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 </tr>
 <tr>
@@ -1290,7 +1290,7 @@ G
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 </tr>
 <tr>
@@ -1298,7 +1298,7 @@ F
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 </tr>
 <tr>
@@ -1306,7 +1306,7 @@ E
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 </tr>
 <tr>
@@ -1314,7 +1314,7 @@ D
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 </tr>
 <tr>
@@ -1322,7 +1322,7 @@ C
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 </tr>
 <tr>
@@ -1330,7 +1330,7 @@ B
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 </tr>
 </tbody>
@@ -1358,7 +1358,7 @@ IQ
 A
 </td>
 <td style="text-align:right;">
-92.76
+86.68
 </td>
 </tr>
 <tr>
@@ -1366,7 +1366,7 @@ A
 B
 </td>
 <td style="text-align:right;">
-85.34
+104.07
 </td>
 </tr>
 <tr>
@@ -1374,7 +1374,7 @@ B
 C
 </td>
 <td style="text-align:right;">
-107.84
+96.88
 </td>
 </tr>
 <tr>
@@ -1382,7 +1382,7 @@ C
 D
 </td>
 <td style="text-align:right;">
-106.29
+93.48
 </td>
 </tr>
 <tr>
@@ -1390,7 +1390,7 @@ D
 E
 </td>
 <td style="text-align:right;">
-125.30
+108.66
 </td>
 </tr>
 <tr>
@@ -1398,7 +1398,7 @@ E
 F
 </td>
 <td style="text-align:right;">
-103.38
+81.50
 </td>
 </tr>
 <tr>
@@ -1406,7 +1406,7 @@ F
 G
 </td>
 <td style="text-align:right;">
-119.88
+91.44
 </td>
 </tr>
 <tr>
@@ -1414,7 +1414,7 @@ G
 H
 </td>
 <td style="text-align:right;">
-102.82
+83.04
 </td>
 </tr>
 <tr>
@@ -1422,7 +1422,7 @@ H
 I
 </td>
 <td style="text-align:right;">
-94.46
+97.82
 </td>
 </tr>
 <tr>
@@ -1430,7 +1430,7 @@ I
 J
 </td>
 <td style="text-align:right;">
-110.85
+103.07
 </td>
 </tr>
 <tr>
@@ -1438,7 +1438,7 @@ J
 K
 </td>
 <td style="text-align:right;">
-115.53
+106.71
 </td>
 </tr>
 <tr>
@@ -1446,7 +1446,7 @@ K
 L
 </td>
 <td style="text-align:right;">
-84.19
+102.37
 </td>
 </tr>
 </tbody>
